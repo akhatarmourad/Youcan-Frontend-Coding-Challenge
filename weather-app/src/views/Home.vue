@@ -1,15 +1,22 @@
 <script lang="ts" setup>
 import CityInfos from '../components/CityInfos.vue';
+import Search from '../components/Search.vue';
 import WeatherForecast from '../components/WeatherForecast.vue';
 import WeatherMetrics from '../components/WeatherMetrics.vue';
 </script>
 
 <template>
-    <div class="outer-container">
-        <div class="inner-container">
-            <CityInfos />
-            <WeatherMetrics />
-            <WeatherForecast />
+    <div>
+        <!-- Search Input -->
+         <Search />
+
+        <!-- Weather Infos -->
+        <div class="outer-container">
+            <div class="inner-container">
+                <CityInfos />
+                <WeatherMetrics />
+                <WeatherForecast />
+            </div>
         </div>
     </div>
 </template>
