@@ -19,7 +19,7 @@ const setActiveMeasurement = (measurement: 'metric' | 'imperial') => {
             <p class="title">Temperature</p>
             <div class="btns-box">
                 <button 
-                    :class="{ 'bg-white': activeDegree === 'C' }"
+                    :class="['btn', { 'bg-white': activeDegree === 'C' }]"
                     :aria-pressed="activeDegree === 'C'"
                     @click="setActiveDegree('C')"
                 >
@@ -27,7 +27,7 @@ const setActiveMeasurement = (measurement: 'metric' | 'imperial') => {
                 </button>
 
                 <button
-                    :class="{'bg-white': activeDegree === 'F'}"
+                    :class="['btn', { 'bg-white': activeDegree === 'F' }]"
                     :aria-pressed="activeDegree === 'F'"
                     @click="setActiveDegree('F')"
                 >
@@ -40,7 +40,7 @@ const setActiveMeasurement = (measurement: 'metric' | 'imperial') => {
             <p class="title">Measurements</p>
             <div class="btns-box">
                 <button 
-                    :class="{'bg-white': activeMeasurement === 'metric'}"
+                    :class="['btn', { 'bg-white': activeMeasurement === 'metric' }]"
                     :aria-pressed="activeMeasurement === 'metric'"
                     @click="setActiveMeasurement('metric')"
                 >
@@ -48,7 +48,7 @@ const setActiveMeasurement = (measurement: 'metric' | 'imperial') => {
                 </button>
 
                 <button 
-                    :class="{'bg-white': activeMeasurement === 'imperial'}"
+                    :class="['btn', { 'bg-white': activeMeasurement === 'imperial' }]"
                     :aria-pressed="activeMeasurement === 'imperial'"
                     @click="setActiveMeasurement('imperial')"
                 >
@@ -60,6 +60,8 @@ const setActiveMeasurement = (measurement: 'metric' | 'imperial') => {
 </template>
 
 <style scoped>
+@import "../assets//styles/global.css";
+
 .settings {
   background-color: white;
   width: 235px;
@@ -74,38 +76,5 @@ const setActiveMeasurement = (measurement: 'metric' | 'imperial') => {
   display: flex;
   flex-direction: column;
   gap: 25px 0px;
-}
-
-.title {
-    margin-bottom: 5px;
-    font-size: 14px;
-    font-weight: 500;
-}
-
-.btns-box {
-    background-color: #F5F7FA;
-    padding: 4px;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-button {
-    border: none;
-    outline: none;
-    padding: 5px 10px;
-    border-radius: 6px;
-    background: transparent;
-    cursor: pointer;
-    font-family: "Inter", sans-serif;
-    font-size: 14px;
-    font-weight: 400;
-    flex: 1;
-}
-
-.bg-white {
-  background-color: white;
-  box-shadow: 0 3px 7px rgba(0, 0, 0, 0.1);
 }
 </style>

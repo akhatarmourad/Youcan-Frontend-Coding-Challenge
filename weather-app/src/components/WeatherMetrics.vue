@@ -86,7 +86,7 @@ import { DropLine, SlowDownLine, ShowersLine, WindyLine, Cloud } from '../assets
     display: flex;
     flex-direction: column;
     gap: 20px 0px;
-    margin-bottom: 32px;
+    margin-bottom: 40px;
 }
 
 .flex {
