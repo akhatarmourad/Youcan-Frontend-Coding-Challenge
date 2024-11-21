@@ -23,7 +23,6 @@ module.exports = {
         extraFileExtensions: ['.vue'],
         ignorePatterns: ['.eslintrc.cjs']
     },
-    parser: 'vue-eslint-parser',
     plugins: [
         'no-relative-import-paths',
         'vue',

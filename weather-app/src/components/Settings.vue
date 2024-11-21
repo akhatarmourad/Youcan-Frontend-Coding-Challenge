@@ -1,16 +1,16 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
 
-const activeDegree = ref<string>('C');
-const activeMeasurement = ref<string>('metric');
+const activeDegree = ref<'C' | 'F'>('C');
+const activeMeasurement = ref<'metric' | 'imperial'>('metric');
 
-const setActiveDegree = (degree: string) => {
+const setActiveDegree = (degree: 'C' | 'F') => {
   activeDegree.value = degree;
-}
+};
 
-const setActiveMeasurement = (measurement: string) => {
+const setActiveMeasurement = (measurement: 'metric' | 'imperial') => {
   activeMeasurement.value = measurement;
-}
+};
 </script>
 
 <template>
@@ -19,7 +19,8 @@ const setActiveMeasurement = (measurement: string) => {
             <p class="title">Temperature</p>
             <div class="btns-box">
                 <button 
-                    :class="{'bg-white': activeDegree === 'C'}"
+                    :class="{ 'bg-white': activeDegree === 'C' }"
+                    :aria-pressed="activeDegree === 'C'"
                     @click="setActiveDegree('C')"
                 >
                     °C
@@ -27,6 +28,7 @@ const setActiveMeasurement = (measurement: string) => {
 
                 <button
                     :class="{'bg-white': activeDegree === 'F'}"
+                    :aria-pressed="activeDegree === 'F'"
                     @click="setActiveDegree('F')"
                 >
                     °F
@@ -39,6 +41,7 @@ const setActiveMeasurement = (measurement: string) => {
             <div class="btns-box">
                 <button 
                     :class="{'bg-white': activeMeasurement === 'metric'}"
+                    :aria-pressed="activeMeasurement === 'metric'"
                     @click="setActiveMeasurement('metric')"
                 >
                     Metric
@@ -46,6 +49,7 @@ const setActiveMeasurement = (measurement: string) => {
 
                 <button 
                     :class="{'bg-white': activeMeasurement === 'imperial'}"
+                    :aria-pressed="activeMeasurement === 'imperial'"
                     @click="setActiveMeasurement('imperial')"
                 >
                     Imperial

@@ -1,13 +1,27 @@
 <script lang="ts" setup>
-import { ref } from "vue";
+import { ref, onMounted, onUnmounted } from "vue";
 import Settings from "./Settings.vue";
+import { getFormattedDate, getCurrentTime } from "../libs/utils";
 
 const showSettings = ref<boolean>(false);
+const currentTime = ref<string>(getCurrentTime());
+const currentDate = ref<string>(getFormattedDate());
+let timeInterval: ReturnType<typeof setInterval>;
 
 // Toggle Settings component
 const toggleSettings = (): void => {
   showSettings.value = !showSettings.value;
 };
+
+onMounted(() => {
+  timeInterval = setInterval(() => {
+    currentTime.value = getCurrentTime();
+  }, 60000); 
+});
+
+onUnmounted(() => {
+  clearInterval(timeInterval);
+});
 </script>
 
 <template>
@@ -15,8 +29,8 @@ const toggleSettings = (): void => {
         <!-- Start City Name + Date + Time -->
         <div class="infos-box">
             <h1>Casablanca</h1>
-            <p>Friday, November 8, 2024</p>
-            <p>09:34 AM</p>
+            <p>{{ currentDate }}</p>
+            <p>{{ currentTime }}</p>
         </div>
         <!-- Ent City Name + Date + Time -->
 
@@ -53,7 +67,9 @@ h1 {
 }
 
 p {
-    color: var(--secondary-color)
+    color: var(--secondary-color);
+    font-size: 16px;
+    font-weight: 400;
 }
 .gear-box {
     display: flex;
