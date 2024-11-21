@@ -1,31 +1,33 @@
 {
-  "name": "weather-app",
-  "private": true,
-  "version": "0.0.0",
-  "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build": "vue-tsc -b && vite build",
-    "preview": "vite preview",
-    "lint": "eslint --ext .ts,.vue --ignore-path .gitignore --fix src",
-    "format": "prettier .  --write"
-  },
-  "dependencies": {
-    "vue": "^3.5.12",
-    "vue-router": "^4.4.5"
-  },
-  "devDependencies": {
-    "@typescript-eslint/parser": "^8.15.0",
-    "@vitejs/plugin-vue": "^5.1.4",
-    "eslint": "^9.15.0",
-    "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-prettier": "^5.2.1",
-    "eslint-plugin-vue": "^9.31.0",
-    "prettier": "3.3.3",
-    "stylelint": "^16.10.0",
-    "stylelint-config-recommended": "^14.0.1",
-    "typescript": "~5.6.2",
-    "vite": "^5.4.10",
-    "vue-tsc": "^2.1.8"
-  }
+    "name": "weather-app",
+    "private": true,
+    "version": "0.0.0",
+    "type": "module",
+    "scripts": {
+        "dev": "vite",
+        "build": "vue-tsc -b && vite build",
+        "preview": "vite preview",
+        "lint": "eslint --ext .vue,.ts,.js . --fix --ignore-path .gitignore",
+        "format": "prettier .  --write"
+    },
+    "dependencies": {
+        "vue": "^3.5.12",
+        "vue-router": "^4.4.5"
+    },
+    "devDependencies": {
+        "@typescript-eslint/eslint-plugin": "^8.15.0",
+        "@typescript-eslint/parser": "^8.15.0",
+        "@vitejs/plugin-vue": "^5.1.4",
+        "eslint": "^9.15.0",
+        "eslint-config-prettier": "^9.1.0",
+        "eslint-plugin-prettier": "^5.2.1",
+        "eslint-plugin-vue": "^9.31.0",
+        "prettier": "3.3.3",
+        "stylelint": "^16.10.0",
+        "stylelint-config-recommended": "^14.0.1",
+        "typescript": "~5.6.2",
+        "vite": "^5.4.10",
+        "vite-plugin-eslint": "^1.8.1",
+        "vue-tsc": "^2.1.8"
+    }
 }

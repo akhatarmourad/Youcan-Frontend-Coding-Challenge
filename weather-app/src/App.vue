@@ -1,10 +1,9 @@
 <script setup lang="ts">
-const map = 67;
+const map = 67
 </script>
 
 <template>
-  <router-view />
+    <router-view />
 </template>
 
-<style scoped>
-</style>
+<style scoped></style>

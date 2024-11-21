@@ -1,6 +1,25 @@
+<script lang="ts" setup>
+import CityInfos from '../components/CityInfos.vue';
+import WeatherForecast from '../components/WeatherForecast.vue';
+import WeatherMetrics from '../components/WeatherMetrics.vue';
+</script>
+
 <template>
-    <p>Hello Vue, Home View</p>
-    <p>Helloooooooooooo !</p>
+    <div class="outer-container">
+        <div class="inner-container">
+            <CityInfos />
+            <WeatherMetrics />
+            <WeatherForecast />
+        </div>
+    </div>
 </template>
 
-<script lang="ts" setup></script>
+<style scoped>
+.outer-container  {
+    background-color: #fff;
+    width: 600px;
+    height: 500px;
+    border-radius: 24px;
+    padding: 24px 32px;
+}
+</style>

@@ -1,0 +1,15 @@
+{
+    "eslint.validate": ["vue", "javascript", "typescript"],
+    "vetur.validation.template": false,
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": "explicit",
+      "source.fixAll.stylelint": "explicit"
+    },
+    "editor.quickSuggestions": {
+      "other": true,
+      "comments": false,
+      "strings": true
+    },
+    "css.validate": false
+  }

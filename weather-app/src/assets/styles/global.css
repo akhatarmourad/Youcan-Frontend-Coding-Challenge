@@ -1,7 +1,43 @@
+@font-face {
+    font-family: 'Inter Display';
+    src: url('../assets/fonts/InterDisplay-Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Inter';
+    src: url('@/assets/fonts/Inter.ttc') format('truetype-collection');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+:root {
+    --primary-color: #0E121B;
+    --secondary-color: #5D6270;
+    --gradient-background: linear-gradient(0deg, #0E121B, #34373F);
+}
+
 body {
     margin: 0;
     display: flex;
-    place-items: center;
+    align-items: center;
+    justify-content: center;
     min-width: 320px;
     min-height: 100vh;
+    background: var(--gradient-background);
+    color: var(--primary-color);
+    font-family: 'Inter', sans-serif;
+}
+
+* {
+    scrollbar-width: none;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+*::-webkit-scrollbar {
+    display: none;
 }
