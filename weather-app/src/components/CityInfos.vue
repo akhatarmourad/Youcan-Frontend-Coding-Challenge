@@ -52,6 +52,7 @@ onUnmounted(() => {
     display: flex;
     align-items: start;
     justify-content: space-between;
+    margin-bottom: 32px;
 }
 
 .infos-box {

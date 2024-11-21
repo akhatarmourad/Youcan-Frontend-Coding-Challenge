@@ -1,6 +1,7 @@
-import dropLine from './drop-line.svg'
-import showersLine from './showers-line.svg'
-import slowDownLine from './slow-down-line.svg'
-import widnyLine from './windy-line.svg'
+import DropLine from "./DropLine.vue";
+import SlowDownLine from "./SlowDownLine.vue";
+import WindyLine from "./WindyLine.vue";
+import ShowersLine from "./ShowersLine.vue";
+import Cloud from "./Cloud.vue";
 
-export { dropLine, showersLine, slowDownLine, widnyLine }
+export { DropLine, SlowDownLine, WindyLine, ShowersLine, Cloud }
