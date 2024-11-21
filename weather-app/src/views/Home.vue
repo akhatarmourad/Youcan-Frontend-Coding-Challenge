@@ -17,7 +17,7 @@ import WeatherMetrics from '../components/WeatherMetrics.vue';
 <style scoped>
 .outer-container  {
     background-color: #fff;
-    width: 600px;
+    width: 700px;
     height: 500px;
     border-radius: 24px;
     padding: 24px 32px;

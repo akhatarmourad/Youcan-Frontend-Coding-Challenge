@@ -1,4 +1,14 @@
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import { ref } from "vue";
+import Settings from "./Settings.vue";
+
+const showSettings = ref<boolean>(false);
+
+// Toggle Settings component
+const toggleSettings = (): void => {
+  showSettings.value = !showSettings.value;
+};
+</script>
 
 <template>
     <div class="container">
@@ -12,7 +22,10 @@
 
         <!-- Settings Icon-->
         <div class="gear-box">
-            <i class="fa-solid fa-gear gear"></i>
+            <i class="fa-solid fa-gear gear" @click="toggleSettings"></i>
+
+            <!-- Settings Drop Down Menu -->
+             <Settings v-if="showSettings" />
         </div>
     </div>
 </template>
@@ -48,11 +61,12 @@ p {
     align-items: center;
     border: 1px solid #E1E4EA;
     border-radius: 8px;
-    padding: 8px;
     cursor: pointer;
+    position: relative;
 }
 
 .gear {
     color: var(--secondary-color);
+    padding: 8px;
 }
 </style>
