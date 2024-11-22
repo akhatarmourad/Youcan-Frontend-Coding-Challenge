@@ -1,47 +1,53 @@
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { ref, defineProps } from 'vue';
+import { ForecastWeather } from '../types/types';
+import { formatTime, getWeatherIcon } from '../libs/utils';
 
-const activeTab = ref<'daily' | 'forecast'>('daily');
+defineProps<{ forecastWeather: ForecastWeather | null }>();
 
-const setActiveTab = (type: 'daily' | 'forecast') => {
-  activeTab.value = type;
-};
+const activeTab = ref<'hourly' | 'daily'>('hourly');
+
+const setActiveTab = (type: 'hourly' | 'daily') => {
+    activeTab.value = type
+}
 </script>
 
 <template>
     <div>
         <!-- Start Tabs Bar -->
         <div class="btns-box">
-           <button
+            <button
+                :class="['btn', { 'bg-white': activeTab === 'hourly' }]"
+                :aria-pressed="activeTab === 'hourly'"
+                @click="setActiveTab('hourly')"
+            >
+                Hourly daily
+            </button>
+
+            <button
                 :class="['btn', { 'bg-white': activeTab === 'daily' }]"
                 :aria-pressed="activeTab === 'daily'"
                 @click="setActiveTab('daily')"
-           >
-                Hourly Forecast
-           </button>
-
-           <button
-                :class="['btn', { 'bg-white': activeTab === 'forecast' }]"
-                :aria-pressed="activeTab === 'forecast'"
-                @click="setActiveTab('forecast')"
-           >
-                7-Day Forecast
-           </button>
+            >
+                7-Day daily
+            </button>
         </div>
         <!-- End Tabs Bar -->
 
         <div class="weather-data">
-            <!-- Start Hourly Forecast -->
-            <div v-if="activeTab === 'daily'">
-                Hourly Forecast
+            <!-- Start Hourly -->
+            <div v-if="activeTab === 'hourly'" class="forecast-container">
+                <div v-for="hourWeather in forecastWeather?.hourly" :key="hourWeather.dt" class="single-forecast">
+                </div>
             </div>
-            <!-- End Hourly Forecast -->
+            <!-- End Hourly -->
 
             <!-- Start 7-Day Forecast -->
-            <div v-if="activeTab === 'forecast'">
-                7-Day Forecast
+            <div v-if="activeTab === 'daily'" class="forecast-container">
+                <div v-for="dayWeather in forecastWeather?.daily" :key="dayWeather.dt">
+                </div>
             </div>
-            <!-- End 7-Da Forecast -->
+            <!-- End 7-Day Forcast -->
 
             <!-- Overlays -->
             <div class="overlay" />
@@ -50,13 +56,27 @@ const setActiveTab = (type: 'daily' | 'forecast') => {
     </div>
 </template>
 
-
 <style scoped>
-@import "../assets//styles/global.css";
+@import '../assets//styles/global.css';
 
 .weather-data {
     position: relative;
     margin-top: 15px;
+    overflow: scroll;
+}
+
+.forecast-container {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.single-forecast {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
 }
 
 .overlay {

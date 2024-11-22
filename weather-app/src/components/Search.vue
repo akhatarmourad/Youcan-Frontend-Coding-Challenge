@@ -1,41 +1,49 @@
 <script lang="ts" setup>
-import { ref } from "vue";
-import { fetchMapboxResults } from "../api/mapboxApi";
-import type { MapboxResult } from "../types/types";
+import { ref } from 'vue';
+import { fetchMapboxResults } from '../api/mapboxApi';
+import type { MapboxResult } from '../types/types';
 
-const searchQuery = ref<string>("");
+const searchQuery = ref<string>('');
 const mapboxSearchResults = ref<MapboxResult[] | null>(null);
 const showList = ref<boolean>(false);
-const errorMessage = ref<string>("");
+const errorMessage = ref<string>('');
 const timeout = ref(0);
 
 /* Fetch results from MapBox using Search Query */
 const handleInput = () => {
-  if (timeout.value) clearTimeout(timeout.value);
+    if (timeout.value) clearTimeout(timeout.value)
 
-  timeout.value = setTimeout(async () => {
-    if (searchQuery.value.trim() !== "") {
-      try {
-        mapboxSearchResults.value = await fetchMapboxResults(searchQuery.value);
-        showList.value = true;
-        errorMessage.value = "";
-      } catch (error) {
-        errorMessage.value = "Failed to fetch results, please try again!";
-        mapboxSearchResults.value = null;
-        showList.value = false;
-      }
-    } else {
-      mapboxSearchResults.value = null;
-      showList.value = false;
-    }
-  }, 1000);
-};
+    timeout.value = setTimeout(async () => {
+        if (searchQuery.value.trim() !== '') {
+            try {
+                mapboxSearchResults.value = await fetchMapboxResults(
+                    searchQuery.value
+                )
+                showList.value = true
+                errorMessage.value = ''
+            } catch (error) {
+                errorMessage.value =
+                    'Failed to fetch results, please try again!'
+                mapboxSearchResults.value = null
+                showList.value = false
+            }
+        } else {
+            mapboxSearchResults.value = null
+            showList.value = false
+        }
+    }, 1000)
+}
+
+/* Emit Function */
+const emit =
+    defineEmits<(event: 'result-selected', result: MapboxResult) => void>()
 
 /* Handle Result Selection */
 const selectResult = (result: MapboxResult) => {
-  searchQuery.value = result.properties.name;
-  showList.value = false;
-};
+    emit('result-selected', result);
+    searchQuery.value = result.properties.name
+    showList.value = false
+}
 </script>
 
 <template>
@@ -55,12 +63,12 @@ const selectResult = (result: MapboxResult) => {
 
             <template v-else>
                 <li
-                v-for="result in mapboxSearchResults"
-                :key="result.id"
-                @click="selectResult(result)"
+                    v-for="result in mapboxSearchResults"
+                    :key="result.id"
+                    @click="selectResult(result)"
                 >
-                <p>{{ result.properties.name }}</p>
-                <p>{{ result.properties.place_formatted }}</p>
+                    <p>{{ result.properties.name }}</p>
+                    <p>{{ result.properties.place_formatted }}</p>
                 </li>
             </template>
         </ul>
@@ -68,27 +76,27 @@ const selectResult = (result: MapboxResult) => {
 </template>
 
 <style scoped>
-@import "../assets/styles/global.css";
+@import '../assets/styles/global.css';
 
 .container {
-  position: relative;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 25px;
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 25px;
 }
 
 .input {
-  outline: none;
-  border-radius: 10px;
-  padding: 15px;
-  width: 100%;
-  border: none;
-  background-color: #525050;
-  color: #afafaf;
-  box-sizing: border-box;
+    outline: none;
+    border-radius: 10px;
+    padding: 15px;
+    width: 100%;
+    border: none;
+    background-color: #525050;
+    color: #afafaf;
+    box-sizing: border-box;
 }
 
 ::placeholder {
@@ -103,43 +111,41 @@ input:focus::placeholder {
     color: #afafaf;
 }
 
-
-
 .list {
-  list-style-type: none;
-  border-radius: 10px;
-  background-color: white;
-  position: absolute;
-  top: 55px;
-  padding: 0;
-  width: 100%;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  z-index: 100;
+    list-style-type: none;
+    border-radius: 10px;
+    background-color: white;
+    position: absolute;
+    top: 55px;
+    padding: 0;
+    width: 100%;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    z-index: 100;
 }
 
 .list li {
-  cursor: pointer;
-  padding: 5px 15px;
-  border-radius: 10px;
-  transition: all 0.35s;
+    cursor: pointer;
+    padding: 5px 15px;
+    border-radius: 10px;
+    transition: all 0.35s;
 }
 
 .list li:hover {
-  background-color: #e9e9e9;
-  color: black;
+    background-color: #e9e9e9;
+    color: black;
 }
 
 .list li p {
-  margin: 5px 0px;
+    margin: 5px 0px;
 }
 
 .list li p:first-child {
-  font-weight: bold;
-  color: #222;
+    font-weight: bold;
+    color: #222;
 }
 
 .list li p:nth-child(2) {
-  font-weight: normal;
-  color: #555;
+    font-weight: normal;
+    color: #555;
 }
 </style>

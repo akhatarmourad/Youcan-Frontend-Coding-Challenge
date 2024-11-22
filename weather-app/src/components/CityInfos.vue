@@ -1,34 +1,40 @@
 <script lang="ts" setup>
-import { ref, onMounted, onUnmounted } from "vue";
-import Settings from "./Settings.vue";
-import { getFormattedDate, getCurrentTime } from "../libs/utils";
+import { ref, onMounted, onUnmounted } from 'vue'
+import Settings from './Settings.vue'
+import { getFormattedDate, getCurrentTime } from '../libs/utils'
+import { MapboxResult } from '../types/types'
+import { defaultCity } from '../libs/constants'
 
-const showSettings = ref<boolean>(false);
-const currentTime = ref<string>(getCurrentTime());
-const currentDate = ref<string>(getFormattedDate());
-let timeInterval: ReturnType<typeof setInterval>;
+const showSettings = ref<boolean>(false)
+const currentTime = ref<string>(getCurrentTime())
+const currentDate = ref<string>(getFormattedDate())
+let timeInterval: ReturnType<typeof setInterval>
 
-// Toggle Settings component
+/* Define Props Type */
+defineProps<{ cityInfo: MapboxResult | null }>()
+
+
+/* Toggle Settings Component */
 const toggleSettings = (): void => {
-  showSettings.value = !showSettings.value;
-};
+    showSettings.value = !showSettings.value
+}
 
 onMounted(() => {
-  timeInterval = setInterval(() => {
-    currentTime.value = getCurrentTime();
-  }, 60000); 
-});
+    timeInterval = setInterval(() => {
+        currentTime.value = getCurrentTime()
+    }, 60000)
+})
 
 onUnmounted(() => {
-  clearInterval(timeInterval);
-});
+    clearInterval(timeInterval)
+})
 </script>
 
 <template>
     <div class="container">
         <!-- Start City Name + Date + Time -->
         <div class="infos-box">
-            <h1>Casablanca</h1>
+            <h1>{{ cityInfo?.properties.name || defaultCity.properties.name }}</h1>
             <p>{{ currentDate }}</p>
             <p>{{ currentTime }}</p>
         </div>
@@ -39,13 +45,13 @@ onUnmounted(() => {
             <i class="fa-solid fa-gear gear" @click="toggleSettings"></i>
 
             <!-- Settings Drop Down Menu -->
-             <Settings v-if="showSettings" />
+            <Settings v-if="showSettings" />
         </div>
     </div>
 </template>
 
 <style scoped>
-@import "../assets/styles/global.css";
+@import '../assets/styles/global.css';
 
 .container {
     width: 100%;
@@ -76,7 +82,7 @@ p {
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 1px solid #E1E4EA;
+    border: 1px solid #e1e4ea;
     border-radius: 8px;
     cursor: pointer;
     position: relative;

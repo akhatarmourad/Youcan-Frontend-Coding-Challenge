@@ -14,9 +14,9 @@
 }
 
 :root {
-    --primary-color: #0E121B;
-    --secondary-color: #5D6270;
-    --gradient-background: linear-gradient(0deg, #0E121B, #34373F);
+    --primary-color: #0e121b;
+    --secondary-color: #5d6270;
+    --gradient-background: linear-gradient(0deg, #0e121b, #34373f);
 }
 
 body {
@@ -42,7 +42,6 @@ body {
     display: none;
 }
 
-
 /* Shared CSS Styles */
 .title {
     margin-bottom: 5px;
@@ -51,7 +50,7 @@ body {
 }
 
 .btns-box {
-    background-color: #F5F7FA;
+    background-color: #f5f7fa;
     padding: 4px;
     border-radius: 8px;
     display: flex;
@@ -66,13 +65,13 @@ body {
     border-radius: 6px;
     background: transparent;
     cursor: pointer;
-    font-family: "Inter", sans-serif;
+    font-family: 'Inter', sans-serif;
     font-size: 14px;
     font-weight: 400;
     flex: 1;
 }
 
 .bg-white {
-  background-color: white;
-  box-shadow: 0 3px 7px rgba(0, 0, 0, 0.1);
+    background-color: white;
+    box-shadow: 0 3px 7px rgba(0, 0, 0, 0.1);
 }

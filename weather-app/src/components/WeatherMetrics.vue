@@ -1,5 +1,11 @@
 <script lang="ts" setup>
-import { DropLine, SlowDownLine, ShowersLine, WindyLine, Cloud } from '../assets/icons';
+import {
+    DropLine,
+    SlowDownLine,
+    ShowersLine,
+    WindyLine,
+    Cloud
+} from '../assets/icons'
 </script>
 
 <template>
@@ -19,7 +25,7 @@ import { DropLine, SlowDownLine, ShowersLine, WindyLine, Cloud } from '../assets
         <!-- End Current Temp. & Atmosphere -->
 
         <!-- Start Current Weather Metrics -->
-         <div class="flex">
+        <div class="flex">
             <div class="metrics-container">
                 <div class="flex metric">
                     <div class="icon-name-box">
@@ -55,7 +61,7 @@ import { DropLine, SlowDownLine, ShowersLine, WindyLine, Cloud } from '../assets
                     <span class="metric-value">141</span>
                 </div>
             </div>
-         </div>
+        </div>
         <!-- End Current Weather Metrics -->
 
         <!-- Air Quality Index -->
@@ -69,17 +75,16 @@ import { DropLine, SlowDownLine, ShowersLine, WindyLine, Cloud } from '../assets
             </div>
 
             <!-- Progress Bar -->
-             <div class="bar-box">
+            <div class="bar-box">
                 <span class="bar" />
-                <span class="progress-bar"/>
-             </div>
+                <span class="progress-bar" />
+            </div>
         </div>
     </div>
 </template>
 
-
 <style scoped>
-@import "../assets/styles/global.css";
+@import '../assets/styles/global.css';
 
 .container {
     width: 100%;
@@ -106,7 +111,7 @@ import { DropLine, SlowDownLine, ShowersLine, WindyLine, Cloud } from '../assets
 }
 
 .cloud-icon {
-    color: #99A0AE;
+    color: #99a0ae;
     font-size: 56px;
 }
 
@@ -169,7 +174,7 @@ import { DropLine, SlowDownLine, ShowersLine, WindyLine, Cloud } from '../assets
 
 .info-icon {
     margin-left: 8px;
-    color: #E1E4EA;
+    color: #e1e4ea;
 }
 
 .bar-box {
@@ -182,7 +187,7 @@ import { DropLine, SlowDownLine, ShowersLine, WindyLine, Cloud } from '../assets
     width: 100%;
     height: 6px;
     border-radius: 10px;
-    background-color: #E1E4EA;
+    background-color: #e1e4ea;
 }
 
 .progress-bar {
