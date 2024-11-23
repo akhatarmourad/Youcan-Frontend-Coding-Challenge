@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { ref, defineProps } from 'vue'
 import { ForecastWeather } from '../types/types'
-import { formatTime, getShortDayName } from '../libs/utils'
+import { formatTime, getShortDayName, toFahrenheit } from '../libs/utils'
 import { SvgIcons } from '../assets/icons';
 
 defineProps<{ forecastWeather: ForecastWeather | null }>()
@@ -52,28 +52,33 @@ const getIconComponent = (iconKey: string) => SvgIcons[iconKey] || null;
                             :is="getIconComponent(hourWeather.weather[0].icon)"
                             class="weather-icon"
                         />
-                        <p>{{ console.log(`Icon : ${hourWeather.weather[0].icon}`) }}</p>
                         <p class="font-semibold">{{ Math.round(hourWeather.temp) }}°</p>
                     </div>
                 </div>
                 <!-- End Hourly -->
 
-                <!-- Start 7-Day Forecast -->
-                <div v-if="activeTab === 'daily'" class="forecast-container">
-                    <div
-                        v-for="dayWeather in forecastWeather?.daily"
-                        :key="dayWeather.dt"
-                        class="single-forecast"
-                    >
-                        <p>{{ getShortDayName(dayWeather.dt) }}</p>
-                        <p>{{ Math.round(dayWeather.temp.day) }}°</p>
-                    </div>
-                </div>
-                <!-- End 7-Day Forcast -->
+                <!-- Overlay -->
+                <div class="overlay" />
             </div>
 
-            <!-- Overlay -->
-            <div class="overlay" />
+            <!-- Start 7-Day Forecast -->
+            <div v-if="activeTab === 'daily'" class="forecast-container daily-forecast">
+                <div
+                    v-for="dayWeather in forecastWeather?.daily"
+                    :key="dayWeather.dt"
+                    class="single-forecast"
+                >
+                    <p>{{ getShortDayName(dayWeather.dt) }}</p>
+                    <component
+                        v-if="getIconComponent(dayWeather.weather[0].icon)"
+                        :is="getIconComponent(dayWeather.weather[0].icon)"
+                        class="weather-icon"
+                    />
+                    <p class="font-semibold">{{ Math.round(dayWeather.temp.day) }}°</p>
+                    <p class="font-semibold">{{ Math.round(toFahrenheit(dayWeather.temp.day)) }}°</p>
+                </div>
+            </div>
+            <!-- End 7-Day Forcast -->
         </div>
     </div>
 </template>
@@ -82,20 +87,21 @@ const getIconComponent = (iconKey: string) => SvgIcons[iconKey] || null;
 @import '../assets//styles/global.css';
 
 .weather-data {
-    position: relative;
     margin-top: 15px;
     font-size: 14px;
-    overflow-x: hidden;
 }
 
 .scroll-container {
-    overflow-x: auto; 
+    position: relative; 
+    white-space: nowrap; 
+    max-width: 100%; 
 }
 
 .forecast-container {
     display: flex;
     align-items: center;
     gap: 8px;
+    overflow-x: auto;
 }
 
 .single-forecast {
@@ -123,15 +129,18 @@ const getIconComponent = (iconKey: string) => SvgIcons[iconKey] || null;
     justify-content: center;
 }
 
+.daily-forecast {
+    width: 100%;
+    justify-content: space-between;
+}
+
 .overlay {
-    background: linear-gradient(90deg, transparent, white);
-    position: absolute;
-    right: 0;
-    top: 0;
-    bottom: 0;
+    position: absolute; 
     width: 20%; 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    height: 100%; 
+    bottom: 0; 
+    right: 0; 
+    background: linear-gradient(90deg, transparent, #fff);
+    pointer-events: none; 
 }
 </style>

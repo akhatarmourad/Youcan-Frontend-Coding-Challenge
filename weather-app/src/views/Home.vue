@@ -70,6 +70,7 @@ onMounted(async () => {
 .outer-container {
     background-color: #fff;
     width: 700px;
+    min-height: 590px;
     border-radius: 24px;
     padding: 24px 32px;
 }
