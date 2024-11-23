@@ -28,11 +28,6 @@ export function formatTime(dt: number): string {
     return `${hours}:${minutes}`
 }
 
-export const getWeatherIcon = (iconCode: string): string => {
-    const baseUrl = 'https://openweathermap.org/img/wn/'
-    console.log(`${baseUrl}${iconCode}@2x.png`)
-    return `${baseUrl}${iconCode}@2x.png`
-}
 
 export function getShortDayName(dt: number): string {
     const date = new Date(dt * (dt < 1e10 ? 1000 : 1))
@@ -42,10 +37,4 @@ export function getShortDayName(dt: number): string {
 
 export function toFahrenheit(celsius: number): number {
     return (celsius * 9) / 5 + 32
-}
-
-export function getDefaultIcon(dt: number) {
-    const hour = new Date(dt * 1000).getHours(); 
-    const isDaytime = hour >= 6 && hour < 18; 
-    return isDaytime ? 1 : 0;
 }

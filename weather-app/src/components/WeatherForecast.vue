@@ -13,6 +13,20 @@ const setActiveTab = (type: 'hourly' | 'daily') => {
 }
 
 const getIconComponent = (iconKey: string) => SvgIcons[iconKey] || null;
+
+const getDefaultWeatherIcon = (mainText: string, dt: number) => {
+    const lowerMainText = mainText.toLowerCase();
+    const hour = new Date(dt * 1000).getHours();
+    const isDaytime = hour >= 6 && hour < 18; 
+
+    if (lowerMainText.includes('clouds')) {
+        return SvgIcons['03d'];
+    } else if (lowerMainText.includes('rain')) {
+        return SvgIcons['10d'];
+    } else if (lowerMainText.includes('clear')) {
+        return isDaytime ? SvgIcons['01d'] : SvgIcons['01n'];
+    }
+}
 </script>
 
 <template>
@@ -24,7 +38,7 @@ const getIconComponent = (iconKey: string) => SvgIcons[iconKey] || null;
                 :aria-pressed="activeTab === 'hourly'"
                 @click="setActiveTab('hourly')"
             >
-                Hourly Forcast
+                Hourly Forecast
             </button>
 
             <button
@@ -52,6 +66,12 @@ const getIconComponent = (iconKey: string) => SvgIcons[iconKey] || null;
                             :is="getIconComponent(hourWeather.weather[0].icon)"
                             class="weather-icon"
                         />
+                        <component
+                            v-else="getDefaultWeatherIcon(hourWeather.weather[0].main, hourWeather.weather[0].icon)"
+                            :is="getDefaultWeatherIcon(hourWeather.weather[0].main, hourWeather.dt)"
+                            class="weather-icon"
+                        />
+                        <p>{{ console.log(hourWeather.dt, hourWeather.weather[0].icon) }}</p>
                         <p class="font-semibold">{{ Math.round(hourWeather.temp) }}°</p>
                     </div>
                 </div>
