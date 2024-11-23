@@ -13,7 +13,6 @@ let timeInterval: ReturnType<typeof setInterval>
 /* Define Props Type */
 defineProps<{ cityInfo: MapboxResult | null }>()
 
-
 /* Toggle Settings Component */
 const toggleSettings = (): void => {
     showSettings.value = !showSettings.value
@@ -34,7 +33,9 @@ onUnmounted(() => {
     <div class="container">
         <!-- Start City Name + Date + Time -->
         <div class="infos-box">
-            <h1>{{ cityInfo?.properties.name || defaultCity.properties.name }}</h1>
+            <h1>
+                {{ cityInfo?.properties.name || defaultCity.properties.name }}
+            </h1>
             <p>{{ currentDate }}</p>
             <p>{{ currentTime }}</p>
         </div>

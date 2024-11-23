@@ -21,19 +21,25 @@ export function getCurrentTime(): string {
 }
 
 export function formatTime(dt: number): string {
-    const date = new Date(dt * 1000); 
-    const hours = String(date.getHours()).padStart(2, '0'); 
-    const minutes = String(date.getMinutes()).padStart(2, '0'); 
-  
-    return `${hours}:${minutes}`;
-  }  
+    const date = new Date(dt * 1000)
+    const hours = String(date.getHours()).padStart(2, '0')
+    const minutes = String(date.getMinutes()).padStart(2, '0')
 
-  export const getWeatherIcon = (iconCode: string): string => {
-    const baseUrl = 'https://openweathermap.org/img/wn/';
-    console.log(`${baseUrl}${iconCode}@2x.png`);
-    return `${baseUrl}${iconCode}@2x.png`; 
-  };
+    return `${hours}:${minutes}`
+}
 
-  export function toFahrenheit(celsius: number): number {
-    return (celsius * 9) / 5 + 32;
-  }
+export const getWeatherIcon = (iconCode: string): string => {
+    const baseUrl = 'https://openweathermap.org/img/wn/'
+    console.log(`${baseUrl}${iconCode}@2x.png`)
+    return `${baseUrl}${iconCode}@2x.png`
+}
+
+export function getShortDayName(dt: number): string {
+    const date = new Date(dt * (dt < 1e10 ? 1000 : 1))
+    const shortDayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+    return shortDayNames[date.getUTCDay()]
+}
+
+export function toFahrenheit(celsius: number): number {
+    return (celsius * 9) / 5 + 32
+}

@@ -36,6 +36,10 @@ body {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none;    /* Old Firefox */
+    -ms-user-select: none;     /* Internet Explorer 10+ */
+    user-select: none;
 }
 
 *::-webkit-scrollbar {
@@ -74,4 +78,34 @@ body {
 .bg-white {
     background-color: white;
     box-shadow: 0 3px 7px rgba(0, 0, 0, 0.1);
+}
+
+/* Font size classes */
+.font-14 {
+    font-size: 14px;
+}
+
+.font-16 {
+    font-size: 16px;
+}
+
+.font-20 {
+    font-size: 20px;
+}
+
+/* Font weight classes */
+.font-normal {
+    font-weight: 400;
+}
+
+.font-medium {
+    font-weight: 500;
+}
+
+.font-semibold {
+    font-weight: 600;
+}
+
+.font-bold {
+    font-weight: 700;
 }

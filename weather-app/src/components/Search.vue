@@ -1,13 +1,13 @@
 <script lang="ts" setup>
-import { ref } from 'vue';
-import { fetchMapboxResults } from '../api/mapboxApi';
-import type { MapboxResult } from '../types/types';
+import { ref } from 'vue'
+import { fetchMapboxResults } from '../api/mapboxApi'
+import type { MapboxResult } from '../types/types'
 
-const searchQuery = ref<string>('');
-const mapboxSearchResults = ref<MapboxResult[] | null>(null);
-const showList = ref<boolean>(false);
-const errorMessage = ref<string>('');
-const timeout = ref(0);
+const searchQuery = ref<string>('')
+const mapboxSearchResults = ref<MapboxResult[] | null>(null)
+const showList = ref<boolean>(false)
+const errorMessage = ref<string>('')
+const timeout = ref(0)
 
 /* Fetch results from MapBox using Search Query */
 const handleInput = () => {
@@ -40,7 +40,7 @@ const emit =
 
 /* Handle Result Selection */
 const selectResult = (result: MapboxResult) => {
-    emit('result-selected', result);
+    emit('result-selected', result)
     searchQuery.value = result.properties.name
     showList.value = false
 }
