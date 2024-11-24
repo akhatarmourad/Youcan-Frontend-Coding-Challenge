@@ -1,7 +1,11 @@
 <script lang="ts" setup>
 import { ref, defineProps, watch, onMounted } from 'vue'
-import { AQIData, AQIResponse, type Coordinates, type CurrentWeather, type HourlyWeather } from '../types/types'
+import type { AQIData, Coordinates, CurrentWeather, HourlyWeather } from '../types/types'
 import { getAirQualityData } from '../api/openWeatherApi';
+import { defaultCity } from '../libs/constants';
+import { calculateMaxPollutantAQI, getTemp } from '../libs/utils';
+import { useSettingsStore } from '../stores/settingsStore';
+import { storeToRefs } from 'pinia';
 
 import {
     DropLine,
@@ -10,12 +14,13 @@ import {
     WindyLine,
     SvgIcons
 } from '../assets/icons'
-import { defaultCity } from '../libs/constants';
-import { calculateMaxPollutantAQI } from '../libs/utils';
 
-const AQIData = ref<AQIData | null>(null);
+
+const AQIInfos = ref<AQIData | null>(null);
 const error = ref<string | null>(null);
-const AQIValue = ref<number>(0);
+
+const { degree } = storeToRefs(useSettingsStore());
+
 
 const props = defineProps<{
     currentWeather: CurrentWeather | null,
@@ -31,7 +36,7 @@ const getAQI = async (latitude: number, longitude: number): Promise<void> => {
         /* Set Data Variables */
 
         /* Calculate Air Quality Index */
-        AQIData.value = calculateMaxPollutantAQI(response.list[0]?.components);
+        AQIInfos.value = calculateMaxPollutantAQI(response.list[0]?.components);
 
         error.value = null;
     } catch (err: unknown) {
@@ -64,7 +69,7 @@ watch(
 );
 
 /* Function to calculate the with of the Progress Bar */
-function calculateWidthPercentage(aqi, maxAQI = 300) {
+function calculateWidthPercentage(aqi: number, maxAQI: number = 300) {
   if (aqi <= 0) return 0;
   if (aqi >= maxAQI) return 100;
 
@@ -83,7 +88,7 @@ function calculateWidthPercentage(aqi, maxAQI = 300) {
                     class="weather-icon"
                 />
                 <span class="temp-value"
-                    >{{ Math.round(currentWeather?.temp ?? 0) }}°</span
+                    >{{ getTemp(currentWeather?.temp ?? 0, degree) }}°</span
                 >
             </div>
 
@@ -93,7 +98,7 @@ function calculateWidthPercentage(aqi, maxAQI = 300) {
                 </p>
                 <p class="trend">
                     Feels like
-                    {{ Math.round(currentWeather?.feels_like ?? 0) }}°
+                    {{ getTemp(currentWeather?.feels_like ?? 0, degree) }}°
                 </p>
             </div>
         </div>
@@ -142,7 +147,7 @@ function calculateWidthPercentage(aqi, maxAQI = 300) {
                         <SlowDownLine class="metric-icon" />
                         <span class="metric-name">AQI</span>
                     </div>
-                    <span class="metric-value">{{ Math.round(AQIData?.aqi ?? 0) }}</span>
+                    <span class="metric-value">{{ Math.round(AQIInfos?.aqi ?? 0) }}</span>
                 </div>
             </div>
         </div>
@@ -161,7 +166,7 @@ function calculateWidthPercentage(aqi, maxAQI = 300) {
             <!-- Progress Bar -->
             <div class="bar-box">
                 <span class="bar" />
-                <span class="progress-bar" :style="{ width: calculateWidthPercentage(AQIData?.aqi) + '%' }" />
+                <span class="progress-bar" :style="{ width: calculateWidthPercentage(AQIInfos?.aqi ?? 0) + '%' }" />
             </div>
         </div>
     </div>

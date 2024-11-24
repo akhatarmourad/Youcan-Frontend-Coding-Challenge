@@ -1,15 +1,19 @@
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { useSettingsStore } from '../stores/settingsStore';
+import { storeToRefs } from "pinia";
 
-const activeDegree = ref<'C' | 'F'>('C')
-const activeMeasurement = ref<'metric' | 'imperial'>('metric')
+// Access the Pinia store
+const settingsStore = useSettingsStore();
 
-const setActiveDegree = (degree: 'C' | 'F') => {
-    activeDegree.value = degree
+const { degree, measurement } = storeToRefs(settingsStore);
+
+function toggleDegree(degree: 'C' | 'F'): void {
+  settingsStore.toggleDegree(degree);
 }
 
-const setActiveMeasurement = (measurement: 'metric' | 'imperial') => {
-    activeMeasurement.value = measurement
+// Function to toggle the measurement
+function toggleMeasurement(measurement: 'metric' | 'imperial'): void {
+  settingsStore.toggleMeasurement(measurement);
 }
 </script>
 
@@ -19,17 +23,17 @@ const setActiveMeasurement = (measurement: 'metric' | 'imperial') => {
             <p class="title">Temperature</p>
             <div class="btns-box">
                 <button
-                    :class="['btn', { 'bg-white': activeDegree === 'C' }]"
-                    :aria-pressed="activeDegree === 'C'"
-                    @click="setActiveDegree('C')"
+                    :class="['btn', { 'bg-white': degree === 'C' }]"
+                    :aria-pressed="degree === 'C'"
+                    @click="toggleDegree('C')"
                 >
                     °C
                 </button>
 
                 <button
-                    :class="['btn', { 'bg-white': activeDegree === 'F' }]"
-                    :aria-pressed="activeDegree === 'F'"
-                    @click="setActiveDegree('F')"
+                    :class="['btn', { 'bg-white': degree === 'F' }]"
+                    :aria-pressed="degree === 'F'"
+                    @click="toggleDegree('F')"
                 >
                     °F
                 </button>
@@ -40,23 +44,17 @@ const setActiveMeasurement = (measurement: 'metric' | 'imperial') => {
             <p class="title">Measurements</p>
             <div class="btns-box">
                 <button
-                    :class="[
-                        'btn',
-                        { 'bg-white': activeMeasurement === 'metric' }
-                    ]"
-                    :aria-pressed="activeMeasurement === 'metric'"
-                    @click="setActiveMeasurement('metric')"
+                    :class="['btn', { 'bg-white': measurement === 'metric' }]"
+                    :aria-pressed="measurement === 'metric'"
+                    @click="toggleMeasurement('metric')"
                 >
                     Metric
                 </button>
 
                 <button
-                    :class="[
-                        'btn',
-                        { 'bg-white': activeMeasurement === 'imperial' }
-                    ]"
-                    :aria-pressed="activeMeasurement === 'imperial'"
-                    @click="setActiveMeasurement('imperial')"
+                    :class="['btn', { 'bg-white': measurement === 'imperial' }]"
+                    :aria-pressed="measurement === 'imperial'"
+                    @click="toggleMeasurement('imperial')"
                 >
                     Imperial
                 </button>

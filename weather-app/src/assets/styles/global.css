@@ -73,11 +73,17 @@ body {
     font-size: 14px;
     font-weight: 400;
     flex: 1;
+    transition: all .25s;
 }
 
 .bg-white {
     background-color: white;
     box-shadow: 0 3px 7px rgba(0, 0, 0, 0.1);
+}
+
+/* Colors */
+.dark-gray {
+    color: #717778;
 }
 
 /* Font size classes */

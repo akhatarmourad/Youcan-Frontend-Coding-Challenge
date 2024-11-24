@@ -37,12 +37,27 @@ export function getShortDayName(dt: number): string {
 }
 
 export function toFahrenheit(celsius: number): number {
-    return (celsius * 9) / 5 + 32
+    return Math.round((celsius * 9) / 5 + 32)
 }
+
+export function getTemp(temp: number, degree: 'C' | 'F'): number {
+    if (degree === 'C') {
+      return Math.round(temp); 
+    } else {
+      return toFahrenheit(temp); 
+    }
+  }
+
+  export function getInverseTemp(temp: number, currentDegree: 'C' | 'F'): number {
+    if (currentDegree === 'C') {
+      return toFahrenheit(temp);
+    } else {
+      return Math.round(temp);
+    }
+  }
 
 type Pollutant = keyof (typeof AQI_TABLE)[0]['ranges']
 
-// Utility function to calculate AQI for a single pollutant
 function calculatePollutantAQI(
     pollutant: Pollutant,
     concentration: number
@@ -83,7 +98,6 @@ export function calculateMaxPollutantAQI(components: Record<Pollutant, number>):
                 concentration
             );
 
-            // Check the AQI table to find the index and category
             const aqiData = AQI_TABLE.find(
                 (entry) =>
                     aqi >= entry.interval[0] && aqi <= entry.interval[1]

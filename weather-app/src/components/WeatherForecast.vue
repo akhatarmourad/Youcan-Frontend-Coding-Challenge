@@ -1,8 +1,10 @@
 <script lang="ts" setup>
 import { ref, defineProps } from 'vue'
+import { storeToRefs } from 'pinia'
 import { ForecastWeather } from '../types/types'
-import { formatTime, getShortDayName, toFahrenheit } from '../libs/utils'
+import { formatTime, getInverseTemp, getShortDayName, getTemp } from '../libs/utils'
 import { SvgIcons } from '../assets/icons'
+import { useSettingsStore } from '../stores/settingsStore'
 
 defineProps<{ forecastWeather: ForecastWeather | null }>()
 
@@ -11,6 +13,8 @@ const activeTab = ref<'hourly' | 'daily'>('hourly')
 const setActiveTab = (type: 'hourly' | 'daily') => {
     activeTab.value = type
 }
+
+const { degree } = storeToRefs(useSettingsStore());
 
 const getIconComponent = (iconKey: string) => SvgIcons[iconKey] || null
 
@@ -82,7 +86,7 @@ const getDefaultWeatherIcon = (mainText: string, dt: number) => {
                             class="weather-icon"
                         />
                         <p class="font-semibold">
-                            {{ Math.round(hourWeather.temp) }}°
+                            {{ getTemp(hourWeather.temp, degree) }}°
                         </p>
                     </div>
                 </div>
@@ -109,10 +113,10 @@ const getDefaultWeatherIcon = (mainText: string, dt: number) => {
                         class="weather-icon"
                     />
                     <p class="font-semibold">
-                        {{ Math.round(dayWeather.temp.day) }}°
+                        {{ getTemp(dayWeather.temp.day, degree) }}°
                     </p>
-                    <p class="font-semibold">
-                        {{ Math.round(toFahrenheit(dayWeather.temp.day)) }}°
+                    <p class="font-semibold dark-gray">
+                        {{ getInverseTemp(dayWeather.temp.day, degree) }}°
                     </p>
                 </div>
             </div>
