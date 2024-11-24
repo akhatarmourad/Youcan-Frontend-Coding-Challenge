@@ -13,6 +13,7 @@ const selectedCityInfo = ref<MapboxResult | null>(null)
 const currentWeather = ref<CurrentWeather | null>(null)
 const forecastWeather = ref<ForecastWeather | null>(null)
 const errorMessage = ref<string | null>(null)
+const coordinates = ref({ lat: 0, lon: 0 });
 
 /* Fetch Weather Data */
 const fetchWeatherData = async (
@@ -41,6 +42,7 @@ const fetchWeatherData = async (
 const handleResultSelected = async (result: MapboxResult): Promise<void> => {
     selectedCityInfo.value = result
     const { latitude, longitude } = result.properties.coordinates
+    coordinates.value = {lat: result.properties.coordinates.latitude, lon: result.properties.coordinates.longitude }
     await fetchWeatherData(latitude, longitude)
 }
 
@@ -59,7 +61,11 @@ onMounted(async () => {
         <div class="outer-container">
             <div class="inner-container">
                 <CityInfos :cityInfo="selectedCityInfo" />
-                <WeatherMetrics :currentWeather="currentWeather" />
+                <WeatherMetrics
+                    :currentWeather="currentWeather"
+                    :hourlyForecast="forecastWeather?.hourly ?? null"
+                    :coordinates="coordinates"
+                />
                 <WeatherForecast :forecastWeather="forecastWeather" />
             </div>
         </div>

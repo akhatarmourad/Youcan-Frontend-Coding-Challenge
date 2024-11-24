@@ -50,4 +50,42 @@ interface WeatherResponse {
     daily: DailyWeather[]
 }
 
-export { MapboxResult, CurrentWeather, ForecastWeather, WeatherResponse }
+interface AQIResponse {
+    list: Array<{
+        main: {
+            aqi: number
+        }
+        components: {
+            co: number
+            no: number
+            no2: number
+            o3: number
+            so2: number
+            pm2_5: number
+            pm10: number
+            nh3: number
+        }
+    }>
+}
+
+interface AQIData {
+    category: string;
+    aqi: number;
+    index: number;
+    pollutant: string;
+}
+
+interface Coordinates {
+    lat: number; 
+    lon: number; 
+  }
+
+export {
+    MapboxResult,
+    CurrentWeather,
+    ForecastWeather,
+    WeatherResponse,
+    AQIResponse,
+    Coordinates,
+    AQIData
+}

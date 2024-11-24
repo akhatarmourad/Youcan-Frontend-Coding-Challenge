@@ -1,11 +1,75 @@
 <script lang="ts" setup>
+import { ref, defineProps, watch, onMounted } from 'vue'
+import { AQIData, AQIResponse, type Coordinates, type CurrentWeather, type HourlyWeather } from '../types/types'
+import { getAirQualityData } from '../api/openWeatherApi';
+
 import {
     DropLine,
     SlowDownLine,
     ShowersLine,
     WindyLine,
-    Cloud
+    SvgIcons
 } from '../assets/icons'
+import { defaultCity } from '../libs/constants';
+import { calculateMaxPollutantAQI } from '../libs/utils';
+
+const AQIData = ref<AQIData | null>(null);
+const error = ref<string | null>(null);
+const AQIValue = ref<number>(0);
+
+const props = defineProps<{
+    currentWeather: CurrentWeather | null,
+    hourlyForecast: HourlyWeather[] | null,
+    coordinates: Coordinates
+}>()
+
+const getIconComponent = (iconKey: string) => SvgIcons[iconKey] || null
+
+const getAQI = async (latitude: number, longitude: number): Promise<void> => {
+    try {
+        const response = await getAirQualityData(latitude, longitude);
+        /* Set Data Variables */
+
+        /* Calculate Air Quality Index */
+        AQIData.value = calculateMaxPollutantAQI(response.list[0]?.components);
+
+        error.value = null;
+    } catch (err: unknown) {
+        if (err instanceof Error) {
+            error.value = `Failed to fetch weather AQI: ${err.message}`;
+        } else {
+            error.value = 'An unknown error occurred. Please try again.';
+        }
+    }
+};
+
+// Call `getAQI` on component mount with initial coordinates
+onMounted(() => {
+    if (props.coordinates) {
+        getAQI(props.coordinates.lat, props.coordinates.lon);
+    }
+    else {
+        getAQI(defaultCity.properties.coordinates.latitude, defaultCity.properties.coordinates.longitude);
+    }
+});
+
+watch(
+    () => props.coordinates,
+    (newCoordinates) => {
+        if (newCoordinates) {
+            getAQI(newCoordinates.lat, newCoordinates.lon);
+        }
+    },
+    { deep: true } 
+);
+
+/* Function to calculate the with of the Progress Bar */
+function calculateWidthPercentage(aqi, maxAQI = 300) {
+  if (aqi <= 0) return 0;
+  if (aqi >= maxAQI) return 100;
+
+  return Math.round((aqi / maxAQI) * 100);
+}
 </script>
 
 <template>
@@ -13,13 +77,24 @@ import {
         <!-- Start Current Temp. & Atmosphere -->
         <div class="flex">
             <div class="temp">
-                <Cloud class="cloud-icon" />
-                <span class="temp-value">19°</span>
+                <component
+                    v-if="getIconComponent(currentWeather?.weather[0].icon || '10d')"
+                    :is="getIconComponent(currentWeather?.weather[0].icon || '10d')"
+                    class="weather-icon"
+                />
+                <span class="temp-value"
+                    >{{ Math.round(currentWeather?.temp ?? 0) }}°</span
+                >
             </div>
 
             <div class="atmosphere">
-                <p class="status">Partially Cloudy</p>
-                <p class="trend">Feels like 21°</p>
+                <p class="description">
+                    {{ currentWeather?.weather[0].description }}
+                </p>
+                <p class="trend">
+                    Feels like
+                    {{ Math.round(currentWeather?.feels_like ?? 0) }}°
+                </p>
             </div>
         </div>
         <!-- End Current Temp. & Atmosphere -->
@@ -32,7 +107,9 @@ import {
                         <DropLine class="metric-icon" />
                         <span class="metric-name">Humidity</span>
                     </div>
-                    <span class="metric-value">40%</span>
+                    <span class="metric-value"
+                        >{{ Math.round(currentWeather?.humidity ?? 0) }}%</span
+                    >
                 </div>
 
                 <div class="flex metric">
@@ -40,7 +117,12 @@ import {
                         <WindyLine class="metric-icon" />
                         <span class="metric-name">Wind</span>
                     </div>
-                    <span class="metric-value">1 km/h</span>
+                    <span class="metric-value"
+                        >{{
+                            Math.round(currentWeather?.wind_speed ?? 0)
+                        }}
+                        km/h</span
+                    >
                 </div>
             </div>
 
@@ -50,7 +132,9 @@ import {
                         <ShowersLine class="metric-icon" />
                         <span class="metric-name">Precipitation</span>
                     </div>
-                    <span class="metric-value">15%</span>
+                    <span class="metric-value"
+                        >{{ hourlyForecast?.[0]?.pop ?? 0 }}%</span
+                    >
                 </div>
 
                 <div class="flex metric">
@@ -58,7 +142,7 @@ import {
                         <SlowDownLine class="metric-icon" />
                         <span class="metric-name">AQI</span>
                     </div>
-                    <span class="metric-value">141</span>
+                    <span class="metric-value">{{ Math.round(AQIData?.aqi ?? 0) }}</span>
                 </div>
             </div>
         </div>
@@ -77,7 +161,7 @@ import {
             <!-- Progress Bar -->
             <div class="bar-box">
                 <span class="bar" />
-                <span class="progress-bar" />
+                <span class="progress-bar" :style="{ width: calculateWidthPercentage(AQIData?.aqi) + '%' }" />
             </div>
         </div>
     </div>
@@ -129,9 +213,10 @@ import {
     align-items: end;
 }
 
-.status {
+.description {
     font-size: 20px;
     font-weight: 600;
+    text-transform: capitalize;
 }
 
 .trend {

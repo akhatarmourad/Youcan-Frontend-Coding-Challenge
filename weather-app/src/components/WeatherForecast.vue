@@ -2,7 +2,7 @@
 import { ref, defineProps } from 'vue'
 import { ForecastWeather } from '../types/types'
 import { formatTime, getShortDayName, toFahrenheit } from '../libs/utils'
-import { SvgIcons } from '../assets/icons';
+import { SvgIcons } from '../assets/icons'
 
 defineProps<{ forecastWeather: ForecastWeather | null }>()
 
@@ -12,19 +12,19 @@ const setActiveTab = (type: 'hourly' | 'daily') => {
     activeTab.value = type
 }
 
-const getIconComponent = (iconKey: string) => SvgIcons[iconKey] || null;
+const getIconComponent = (iconKey: string) => SvgIcons[iconKey] || null
 
 const getDefaultWeatherIcon = (mainText: string, dt: number) => {
-    const lowerMainText = mainText.toLowerCase();
-    const hour = new Date(dt * 1000).getHours();
-    const isDaytime = hour >= 6 && hour < 18; 
+    const lowerMainText = mainText.toLowerCase()
+    const hour = new Date(dt * 1000).getHours()
+    const isDaytime = hour >= 6 && hour < 18
 
     if (lowerMainText.includes('clouds')) {
-        return SvgIcons['03d'];
+        return SvgIcons['03d']
     } else if (lowerMainText.includes('rain')) {
-        return SvgIcons['10d'];
+        return SvgIcons['10d']
     } else if (lowerMainText.includes('clear')) {
-        return isDaytime ? SvgIcons['01d'] : SvgIcons['01n'];
+        return isDaytime ? SvgIcons['01d'] : SvgIcons['01n']
     }
 }
 </script>
@@ -67,12 +67,23 @@ const getDefaultWeatherIcon = (mainText: string, dt: number) => {
                             class="weather-icon"
                         />
                         <component
-                            v-else="getDefaultWeatherIcon(hourWeather.weather[0].main, hourWeather.weather[0].icon)"
-                            :is="getDefaultWeatherIcon(hourWeather.weather[0].main, hourWeather.dt)"
+                            v-else="
+                                getDefaultWeatherIcon(
+                                    hourWeather.weather[0].main,
+                                    hourWeather.weather[0].icon
+                                )
+                            "
+                            :is="
+                                getDefaultWeatherIcon(
+                                    hourWeather.weather[0].main,
+                                    hourWeather.dt
+                                )
+                            "
                             class="weather-icon"
                         />
-                        <p>{{ console.log(hourWeather.dt, hourWeather.weather[0].icon) }}</p>
-                        <p class="font-semibold">{{ Math.round(hourWeather.temp) }}°</p>
+                        <p class="font-semibold">
+                            {{ Math.round(hourWeather.temp) }}°
+                        </p>
                     </div>
                 </div>
                 <!-- End Hourly -->
@@ -82,7 +93,10 @@ const getDefaultWeatherIcon = (mainText: string, dt: number) => {
             </div>
 
             <!-- Start 7-Day Forecast -->
-            <div v-if="activeTab === 'daily'" class="forecast-container daily-forecast">
+            <div
+                v-if="activeTab === 'daily'"
+                class="forecast-container daily-forecast"
+            >
                 <div
                     v-for="dayWeather in forecastWeather?.daily"
                     :key="dayWeather.dt"
@@ -94,8 +108,12 @@ const getDefaultWeatherIcon = (mainText: string, dt: number) => {
                         :is="getIconComponent(dayWeather.weather[0].icon)"
                         class="weather-icon"
                     />
-                    <p class="font-semibold">{{ Math.round(dayWeather.temp.day) }}°</p>
-                    <p class="font-semibold">{{ Math.round(toFahrenheit(dayWeather.temp.day)) }}°</p>
+                    <p class="font-semibold">
+                        {{ Math.round(dayWeather.temp.day) }}°
+                    </p>
+                    <p class="font-semibold">
+                        {{ Math.round(toFahrenheit(dayWeather.temp.day)) }}°
+                    </p>
                 </div>
             </div>
             <!-- End 7-Day Forcast -->
@@ -112,9 +130,9 @@ const getDefaultWeatherIcon = (mainText: string, dt: number) => {
 }
 
 .scroll-container {
-    position: relative; 
-    white-space: nowrap; 
-    max-width: 100%; 
+    position: relative;
+    white-space: nowrap;
+    max-width: 100%;
 }
 
 .forecast-container {
@@ -133,7 +151,7 @@ const getDefaultWeatherIcon = (mainText: string, dt: number) => {
     cursor: pointer;
     padding: 10px 20px;
     border-radius: 10px;
-    transition: all .25s;
+    transition: all 0.25s;
 }
 
 .single-forecast:hover {
@@ -155,12 +173,12 @@ const getDefaultWeatherIcon = (mainText: string, dt: number) => {
 }
 
 .overlay {
-    position: absolute; 
-    width: 20%; 
-    height: 100%; 
-    bottom: 0; 
-    right: 0; 
+    position: absolute;
+    width: 20%;
+    height: 100%;
+    bottom: 0;
+    right: 0;
     background: linear-gradient(90deg, transparent, #fff);
-    pointer-events: none; 
+    pointer-events: none;
 }
 </style>

@@ -37,8 +37,8 @@ body {
     margin: 0;
     box-sizing: border-box;
     -webkit-user-select: none; /* Safari */
-    -moz-user-select: none;    /* Old Firefox */
-    -ms-user-select: none;     /* Internet Explorer 10+ */
+    -moz-user-select: none; /* Old Firefox */
+    -ms-user-select: none; /* Internet Explorer 10+ */
     user-select: none;
 }
 
@@ -108,4 +108,8 @@ body {
 
 .font-bold {
     font-weight: 700;
+}
+
+.capitalize {
+    text-transform: capitalize;
 }
