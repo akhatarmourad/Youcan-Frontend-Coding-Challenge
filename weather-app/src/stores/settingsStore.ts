@@ -1,4 +1,3 @@
-// stores/settings.ts
 import { defineStore } from 'pinia';
 
 type Degree = 'C' | 'F';
@@ -11,12 +10,29 @@ export const useSettingsStore = defineStore('settings', {
   }),
   actions: {
     toggleDegree(newDegree: Degree) {
-      console.log(`Degree Type Value : ${newDegree}`)
-      this.degree = newDegree;
+      console.log(`Degree Type Value: ${newDegree}`);
+
+      if (newDegree === 'F') {
+        this.degree = 'F';
+        if (this.measurement === 'imperial') {
+          this.measurement = 'metric'; 
+        }
+      } else {
+        this.degree = 'C';
+      }
     },
+
     toggleMeasurement(newMeasurement: Measurement) {
-      console.log(`Measurement Type Value : ${newMeasurement}`)
-      this.measurement = newMeasurement;
+      console.log(`Measurement Type Value: ${newMeasurement}`);
+
+      if (newMeasurement === 'imperial') {
+        if (this.degree === 'F') {
+          this.degree = 'C';
+        }
+        this.measurement = 'imperial'; 
+      } else {
+        this.measurement = 'metric';
+      }
     },
   },
 });

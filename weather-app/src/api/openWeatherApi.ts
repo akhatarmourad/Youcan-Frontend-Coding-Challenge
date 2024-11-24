@@ -9,7 +9,7 @@ export const getWeatherData = async (
     units: 'metric' | 'imperial' = 'metric'
 ): Promise<WeatherResponse> => {
     try {
-        const URL = `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&lang=en&exclude=alerts&units=${units}&appid=${WEATHER_API_KEY}`
+        const URL = `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&lang=en&exclude=minutely,alerts&units=${units}&appid=${WEATHER_API_KEY}`
         const response = await axios.get<WeatherResponse>(URL)
 
         return response.data

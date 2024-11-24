@@ -1,7 +1,9 @@
 <script lang="ts" setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, watch } from 'vue'
+import { storeToRefs } from 'pinia'
 import { CurrentWeather, ForecastWeather, MapboxResult } from '../types/types'
 import { getWeatherData } from '../api/openWeatherApi'
+import { useSettingsStore } from '../stores/settingsStore'
 
 import CityInfos from '../components/CityInfos.vue'
 import Search from '../components/Search.vue'
@@ -15,13 +17,16 @@ const forecastWeather = ref<ForecastWeather | null>(null)
 const errorMessage = ref<string | null>(null)
 const coordinates = ref({ lat: 0, lon: 0 });
 
+const { measurement } = storeToRefs(useSettingsStore());
+
 /* Fetch Weather Data */
 const fetchWeatherData = async (
     latitude: number,
-    longitude: number
+    longitude: number,
+    measurement: string,
 ): Promise<void> => {
     try {
-        const response = await getWeatherData(latitude, longitude)
+        const response = await getWeatherData(latitude, longitude, measurement)
 
         /* Set Data Variables */
         const { current, hourly, daily } = response
@@ -43,13 +48,21 @@ const handleResultSelected = async (result: MapboxResult): Promise<void> => {
     selectedCityInfo.value = result
     const { latitude, longitude } = result.properties.coordinates
     coordinates.value = {lat: result.properties.coordinates.latitude, lon: result.properties.coordinates.longitude }
-    await fetchWeatherData(latitude, longitude)
+    await fetchWeatherData(latitude, longitude, measurement.value)
 }
 
 /* Set Default City on Load (Casa) */
 onMounted(async () => {
     await handleResultSelected(defaultCity)
 })
+
+/* Watch for Changes in Measurement */
+watch(measurement, async () => {
+    console.log(measurement.value);
+    console.log(coordinates.value.lat, coordinates.value.lon)
+  const res = await fetchWeatherData(coordinates.value.lat, coordinates.value.lon, measurement.value);
+  console.log(res);
+});
 </script>
 
 <template>
