@@ -34,7 +34,8 @@ Postman was used to test and validate the API endpoints, including the [OpenWeat
 ![Postamn & APIs](./Attatchments/Weather-API-Postman.png)
 
 The [Air Quality Index (AQI)](https://openweathermap.org/air-pollution-index-levels) is calculated based on data from the Pollution APIs, using a standard formula to assess air quality levels.
-![AQI Formula](./Attatchments/AQI%20Formula.png)
+
+![AQI Formula](./Attatchments/AQI-Formula.png)
 
 ## Usage
 
@@ -56,6 +57,7 @@ The [Air Quality Index (AQI)](https://openweathermap.org/air-pollution-index-lev
     ```bash
     npm install
     ```
+
 5. Before running the app, make sure to create a .env file in the root of the weather-app directory and add the necessary environment variables (API keys).
 
     ```bash
