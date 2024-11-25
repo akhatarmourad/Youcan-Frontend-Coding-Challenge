@@ -37,6 +37,10 @@ The [Air Quality Index (AQI)](https://openweathermap.org/air-pollution-index-lev
 
 ![AQI Formula](./Attatchments/AQI-Formula.png)
 
+Deploying the app on Vercel. Check it out via the link: [Weather App](https://youcan-frontend-coding-challenge.vercel.app/).
+
+![Vecel](./Attatchments/Vercel.png)
+
 ## Usage
 
 1. Clone the project using the command below:
