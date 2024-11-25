@@ -254,6 +254,7 @@ function calculateWidthPercentage(aqi: number, maxAQI: number = 300) {
     font-size: 20px;
     font-weight: 600;
     text-transform: capitalize;
+    text-align: right;
 }
 
 .trend {

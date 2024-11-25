@@ -2,13 +2,12 @@
 
 ![Project Banner](./Attatchments/Banner.png)
 
-## Overview 
+## Overview
 
 A weather app built with Vue.js, TypeScript, and Vanilla CSS. It uses the MapBox API to locate cities and places in Morocco, and the OpenWeather API to provide real-time weather data for those locations.
 
 > [!NOTE]
 > In the **Attachment** folder, you will find screenshots showcasing the demo of API testing, API documentation, and other relevant details.
-
 
 ## Technologies & Tools
 
@@ -34,6 +33,9 @@ Postman was used to test and validate the API endpoints, including the [OpenWeat
 ![Postamn & APIs](./Attatchments/Weather-API-Postman.png)
 
 The [Air Quality Index (AQI)](https://openweathermap.org/air-pollution-index-levels) is calculated based on data from the Pollution APIs, using a standard formula to assess air quality levels.
+
+> [!IMPORTANT]
+> The Celsius/Fahrenheit and Metric/Imperial toggles are linked. Imperial is the same as Fahrenheit, so both can't be selected at once. I've handled this case, you can try it.
 
 ![AQI Formula](./Attatchments/AQI-Formula.png)
 

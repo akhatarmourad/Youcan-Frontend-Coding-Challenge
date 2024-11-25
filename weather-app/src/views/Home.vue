@@ -6,11 +6,7 @@ import { getWeatherData } from '../api/openWeatherApi'
 import { useSettingsStore } from '../stores/settingsStore'
 import { defaultCity } from '../libs/constants'
 
-import CityInfos from '../components/CityInfos.vue'
-import Search from '../components/Search.vue'
-import WeatherForecast from '../components/WeatherForecast.vue'
-import WeatherMetrics from '../components/WeatherMetrics.vue'
-import Footer from '../components/Footer.vue'
+import { CityInfos, Search, WeatherMetrics, WeatherForecast, Footer } from '../components'
 
 const selectedCityInfo = ref<MapboxResult | null>(null)
 const currentWeather = ref<CurrentWeather | null>(null)
