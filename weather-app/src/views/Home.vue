@@ -4,12 +4,13 @@ import { storeToRefs } from 'pinia'
 import { CurrentWeather, ForecastWeather, MapboxResult } from '../types/types'
 import { getWeatherData } from '../api/openWeatherApi'
 import { useSettingsStore } from '../stores/settingsStore'
+import { defaultCity } from '../libs/constants'
 
 import CityInfos from '../components/CityInfos.vue'
 import Search from '../components/Search.vue'
 import WeatherForecast from '../components/WeatherForecast.vue'
 import WeatherMetrics from '../components/WeatherMetrics.vue'
-import { defaultCity } from '../libs/constants'
+import Footer from '../components/Footer.vue'
 
 const selectedCityInfo = ref<MapboxResult | null>(null)
 const currentWeather = ref<CurrentWeather | null>(null)
@@ -82,6 +83,9 @@ watch(measurement, async () => {
                 <WeatherForecast :forecastWeather="forecastWeather" />
             </div>
         </div>
+
+        <!-- Footer -->
+        <Footer />
     </div>
 </template>
 
