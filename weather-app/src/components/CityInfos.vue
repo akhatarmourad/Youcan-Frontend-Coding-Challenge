@@ -88,10 +88,26 @@ p {
     border-radius: 8px;
     cursor: pointer;
     position: relative;
+    margin-top: 6px;
 }
 
 .gear {
     color: var(--secondary-color);
     padding: 8px;
+}
+
+/* Media Queries for Small Screens */
+@media (max-width: 480px) {
+    h1 {
+        font-size: 30px;
+    }
+
+    p {
+        font-size: 14px;
+    }
+
+    .gear {
+        padding: 6px;
+    }
 }
 </style>

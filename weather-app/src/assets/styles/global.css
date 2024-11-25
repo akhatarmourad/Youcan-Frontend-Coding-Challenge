@@ -20,12 +20,9 @@
 }
 
 body {
+    width: 100vw;
     margin: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 320px;
-    min-height: 100vh;
+    padding: 20px;
     background: var(--gradient-background);
     color: var(--primary-color);
     font-family: 'Inter', sans-serif;
@@ -80,6 +77,16 @@ body {
     background-color: white;
     box-shadow: 0 3px 7px rgba(0, 0, 0, 0.1);
 }
+
+.weather-icon {
+    object-fit: contain;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+
 
 /* Colors */
 .dark-gray {

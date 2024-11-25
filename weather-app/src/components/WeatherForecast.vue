@@ -68,7 +68,7 @@ const getDefaultWeatherIcon = (mainText: string, dt: number) => {
                         <component
                             v-if="getIconComponent(hourWeather.weather[0].icon)"
                             :is="getIconComponent(hourWeather.weather[0].icon)"
-                            class="weather-icon"
+                            class="weather-icon forecast-icon"
                         />
                         <component
                             v-else="
@@ -83,7 +83,7 @@ const getDefaultWeatherIcon = (mainText: string, dt: number) => {
                                     hourWeather.dt
                                 )
                             "
-                            class="weather-icon"
+                            class="weather-icon forecast-icon"
                         />
                         <p class="font-semibold">
                             {{ getTemp(hourWeather.temp, degree) }}°
@@ -110,7 +110,7 @@ const getDefaultWeatherIcon = (mainText: string, dt: number) => {
                     <component
                         v-if="getIconComponent(dayWeather.weather[0].icon)"
                         :is="getIconComponent(dayWeather.weather[0].icon)"
-                        class="weather-icon"
+                        class="weather-icon forecast-icon"
                     />
                     <p class="font-semibold">
                         {{ getTemp(dayWeather.temp.day, degree) }}°
@@ -162,13 +162,9 @@ const getDefaultWeatherIcon = (mainText: string, dt: number) => {
     background-color: #f5f7fa;
 }
 
-.weather-icon {
-    object-fit: contain;
+.forecast-icon {
     width: 25px;
     height: 25px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 
 .daily-forecast {

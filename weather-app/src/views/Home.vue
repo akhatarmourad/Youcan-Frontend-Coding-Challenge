@@ -26,7 +26,7 @@ const fetchWeatherData = async (
     measurement: string,
 ): Promise<void> => {
     try {
-        const response = await getWeatherData(latitude, longitude, measurement)
+        const response = await getWeatherData(latitude, longitude, measurement as "metric" | "imperial")
 
         /* Set Data Variables */
         const { current, hourly, daily } = response
@@ -66,7 +66,7 @@ watch(measurement, async () => {
 </script>
 
 <template>
-    <div>
+    <div class="wrapper">
         <!-- Search Input -->
         <Search @result-selected="handleResultSelected" />
 
@@ -86,11 +86,39 @@ watch(measurement, async () => {
 </template>
 
 <style scoped>
+.wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-width: 320px;
+    min-height: 100vh;
+}
+
 .outer-container {
     background-color: #fff;
     width: 700px;
     min-height: 590px;
     border-radius: 24px;
     padding: 24px 32px;
+}
+
+/* Media Queries for Medium Screens */
+@media (max-width: 768px) {
+    .wrapper {
+        padding: 30px 40px;
+    }
+    
+    .outer-container {
+        width: 100%;
+    }
+}
+
+/* Media Queries for Small Screens */
+@media (max-width: 480px) {
+    .wrapper {
+        padding: 5px;
+    }
 }
 </style>

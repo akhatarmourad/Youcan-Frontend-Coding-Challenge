@@ -28,7 +28,16 @@ const props = defineProps<{
     coordinates: Coordinates
 }>()
 
-const getIconComponent = (iconKey: string) => SvgIcons[iconKey] || null
+const getIconComponent = (iconKey: string) => {
+  if (SvgIcons[iconKey]) {
+    return SvgIcons[iconKey]; 
+  }
+
+  const currentHour = new Date().getHours();
+  const isDayTime = currentHour >= 6 && currentHour < 18; 
+  return isDayTime ? SvgIcons['01d'] : SvgIcons['01n'];
+};
+
 
 const getAQI = async (latitude: number, longitude: number): Promise<void> => {
     try {
@@ -83,9 +92,9 @@ function calculateWidthPercentage(aqi: number, maxAQI: number = 300) {
         <div class="flex">
             <div class="temp">
                 <component
-                    v-if="getIconComponent(currentWeather?.weather[0].icon || '10d')"
-                    :is="getIconComponent(currentWeather?.weather[0].icon || '10d')"
-                    class="weather-icon"
+                    v-if="getIconComponent(currentWeather?.weather[0].icon || '')"
+                    :is="getIconComponent(currentWeather?.weather[0].icon || '')"
+                    class="weather-icon temp-icon"
                 />
                 <span class="temp-value"
                     >{{ getTemp(currentWeather?.temp ?? 0, degree) }}°</span
@@ -105,7 +114,7 @@ function calculateWidthPercentage(aqi: number, maxAQI: number = 300) {
         <!-- End Current Temp. & Atmosphere -->
 
         <!-- Start Current Weather Metrics -->
-        <div class="flex">
+        <div class="metrics-wrapper">
             <div class="metrics-container">
                 <div class="flex metric">
                     <div class="icon-name-box">
@@ -188,6 +197,13 @@ function calculateWidthPercentage(aqi: number, maxAQI: number = 300) {
     align-items: center;
     justify-content: space-between;
     flex: 1;
+}
+
+.metrics-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex: 1;
     gap: 60px;
 }
 
@@ -196,12 +212,12 @@ function calculateWidthPercentage(aqi: number, maxAQI: number = 300) {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 25px;
+    gap: 20px;
 }
 
-.cloud-icon {
-    color: #99a0ae;
-    font-size: 56px;
+.temp-icon {
+    width: 58px;
+    height: 58px;
 }
 
 .temp-value {
@@ -289,5 +305,38 @@ function calculateWidthPercentage(aqi: number, maxAQI: number = 300) {
     border-radius: 10px;
     width: 20%;
     background-color: #f74f4f;
+}
+
+/* Media Queries for Medium Screens */
+@media (max-width: 768px) {
+    .metrics-wrapper {
+        flex-direction: column;
+        align-items: start;
+        gap: 0px;
+    }
+
+    .metrics-container {
+        width: 100%;
+    }
+}
+
+/* Media Queries for Small Screens */
+@media (max-width: 480px) {
+    .temp-value {
+        font-size: 40px;
+    }
+
+    .temp-icon {
+        width: 41px;
+        height: 41px;
+    }
+
+    .description {
+        font-size: 18px;
+    }
+
+    .trend {
+        font-size: 14px;
+    }
 }
 </style>

@@ -92,7 +92,7 @@ const selectResult = (result: MapboxResult) => {
     outline: none;
     border-radius: 10px;
     padding: 15px;
-    width: 100%;
+    width: 700px;
     border: none;
     background-color: #525050;
     color: #afafaf;
@@ -118,7 +118,7 @@ input:focus::placeholder {
     position: absolute;
     top: 55px;
     padding: 0;
-    width: 100%;
+    width: 700px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     z-index: 100;
 }
@@ -147,5 +147,16 @@ input:focus::placeholder {
 .list li p:nth-child(2) {
     font-weight: normal;
     color: #555;
+}
+
+/* Media Queries for Medium Screen */
+@media (max-width: 768px) {
+    .input {
+        width: 100%;
+    }
+
+    .list {
+        width: 100%;
+    }
 }
 </style>

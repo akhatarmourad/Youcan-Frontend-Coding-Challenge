@@ -81,4 +81,19 @@ function toggleMeasurement(measurement: 'metric' | 'imperial'): void {
     flex-direction: column;
     gap: 25px 0px;
 }
+
+/* Adjust Settings Drop Down for Medium Screens */
+@media (max-width: 768px) {
+    .settings {
+        width: 200px;
+    }
+}
+
+/* Media Queries for Small Screens */
+@media (max-width: 480px) {
+    .settings {
+        width: 190px;
+        font-size: 13px;
+    }
+}
 </style>
