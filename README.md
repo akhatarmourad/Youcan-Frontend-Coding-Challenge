@@ -35,7 +35,7 @@ Postman was used to test and validate the API endpoints, including the [OpenWeat
 The [Air Quality Index (AQI)](https://openweathermap.org/air-pollution-index-levels) is calculated based on data from the Pollution APIs, using a standard formula to assess air quality levels.
 
 > [!IMPORTANT]
-> The Celsius/Fahrenheit and Metric/Imperial toggles are linked. Imperial is the same as Fahrenheit, so both can't be selected at once. I've handled this case, you can try it.
+> When having Impeial Measurement, I only convert Wind Speed fom km/h to mph and vice versa !
 
 ![AQI Formula](./Attatchments/AQI-Formula.png)
 

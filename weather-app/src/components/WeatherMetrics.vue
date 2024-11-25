@@ -8,7 +8,7 @@ import type {
 } from '../types/types'
 import { getAirQualityData } from '../api/openWeatherApi'
 import { defaultCity } from '../libs/constants'
-import { calculateMaxPollutantAQI, getTemp, getWindSpeedUnit } from '../libs/utils'
+import { calculateMaxPollutantAQI, convertPOPToPercentage, getTemp, getWindSpeedUnit } from '../libs/utils'
 import { useSettingsStore } from '../stores/settingsStore'
 import { storeToRefs } from 'pinia'
 
@@ -157,7 +157,7 @@ function calculateWidthPercentage(aqi: number, maxAQI: number = 300) {
                         <span class="metric-name">Precipitation</span>
                     </div>
                     <span class="metric-value"
-                        >{{ hourlyForecast?.[0]?.pop ?? 0 }}%</span
+                        >{{ convertPOPToPercentage(hourlyForecast?.[0]?.pop ?? 0) }}%</span
                     >
                 </div>
 

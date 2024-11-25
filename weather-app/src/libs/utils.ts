@@ -93,6 +93,12 @@ export function getPrecipitationUnit(unit: 'metric' | 'imperial'): string {
     }
 }
 
+export function convertPOPToPercentage(pop: number): string {
+    const percentage = Math.min(Math.max(pop, 0), 1) * 100;
+    return `${Math.round(percentage)}`;
+}
+
+
 type Pollutant = keyof (typeof AQI_TABLE)[0]['ranges']
 
 function calculatePollutantAQI(
