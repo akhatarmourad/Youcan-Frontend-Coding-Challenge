@@ -14,7 +14,7 @@ const forecastWeather = ref<ForecastWeather | null>(null)
 const errorMessage = ref<string | null>(null)
 const coordinates = ref({ lat: 0, lon: 0 })
 
-const { measurement } = storeToRefs(useSettingsStore())
+const { measurement, degree } = storeToRefs(useSettingsStore())
 
 /* Fetch Weather Data */
 const fetchWeatherData = async (
@@ -64,12 +64,14 @@ onMounted(async () => {
 watch(measurement, async () => {
     console.log(measurement.value)
     console.log(coordinates.value.lat, coordinates.value.lon)
-    const res = await fetchWeatherData(
-        coordinates.value.lat,
-        coordinates.value.lon,
-        measurement.value
-    )
-    console.log(res)
+    
+        const res = await fetchWeatherData(
+            coordinates.value.lat,
+            coordinates.value.lon,
+            measurement.value
+        )
+
+        console.log(res);
 })
 </script>
 

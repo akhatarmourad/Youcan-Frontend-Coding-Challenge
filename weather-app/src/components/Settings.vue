@@ -2,7 +2,6 @@
 import { useSettingsStore } from '../stores/settingsStore'
 import { storeToRefs } from 'pinia'
 
-// Access the Pinia store
 const settingsStore = useSettingsStore()
 
 const { degree, measurement } = storeToRefs(settingsStore)
@@ -11,7 +10,6 @@ function toggleDegree(degree: 'C' | 'F'): void {
     settingsStore.toggleDegree(degree)
 }
 
-// Function to toggle the measurement
 function toggleMeasurement(measurement: 'metric' | 'imperial'): void {
     settingsStore.toggleMeasurement(measurement)
 }
@@ -46,7 +44,7 @@ function toggleMeasurement(measurement: 'metric' | 'imperial'): void {
                 <button
                     :class="['btn', { 'bg-white': measurement === 'metric' }]"
                     :aria-pressed="measurement === 'metric'"
-                    @click="toggleDegree('C')"
+                    @click="toggleMeasurement('metric')"
                 >
                     Metric
                 </button>
@@ -54,7 +52,7 @@ function toggleMeasurement(measurement: 'metric' | 'imperial'): void {
                 <button
                     :class="['btn', { 'bg-white': measurement === 'imperial' }]"
                     :aria-pressed="measurement === 'imperial'"
-                    @click="toggleDegree('F')"
+                    @click="toggleMeasurement('imperial')"
                 >
                     Imperial
                 </button>

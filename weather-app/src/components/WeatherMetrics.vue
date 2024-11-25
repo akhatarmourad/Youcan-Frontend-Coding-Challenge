@@ -23,7 +23,7 @@ import {
 const AQIInfos = ref<AQIData | null>(null)
 const error = ref<string | null>(null)
 
-const { degree } = storeToRefs(useSettingsStore())
+const { degree, measurement } = storeToRefs(useSettingsStore())
 
 const props = defineProps<{
     currentWeather: CurrentWeather | null
@@ -105,7 +105,7 @@ function calculateWidthPercentage(aqi: number, maxAQI: number = 300) {
                     class="weather-icon temp-icon"
                 />
                 <span class="temp-value"
-                    >{{ getTemp(currentWeather?.temp ?? 0, degree) }}°</span
+                    >{{ getTemp(currentWeather?.temp ?? 0, degree, measurement) }}°</span
                 >
             </div>
 
@@ -115,7 +115,7 @@ function calculateWidthPercentage(aqi: number, maxAQI: number = 300) {
                 </p>
                 <p class="trend">
                     Feels like
-                    {{ getTemp(currentWeather?.feels_like ?? 0, degree) }}°
+                    {{ getTemp(currentWeather?.feels_like ?? 0, degree, measurement) }}°
                 </p>
             </div>
         </div>

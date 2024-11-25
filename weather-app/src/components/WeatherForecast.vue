@@ -19,7 +19,7 @@ const setActiveTab = (type: 'hourly' | 'daily') => {
     activeTab.value = type
 }
 
-const { degree } = storeToRefs(useSettingsStore())
+const { degree, measurement } = storeToRefs(useSettingsStore())
 
 const getIconComponent = (iconKey: string) => SvgIcons[iconKey] || null
 
@@ -91,7 +91,7 @@ const getDefaultWeatherIcon = (mainText: string, dt: number) => {
                             class="weather-icon forecast-icon"
                         />
                         <p class="font-semibold">
-                            {{ getTemp(hourWeather.temp, degree) }}°
+                            {{ getTemp(hourWeather.temp, degree, measurement) }}°
                         </p>
                     </div>
                 </div>
@@ -118,10 +118,10 @@ const getDefaultWeatherIcon = (mainText: string, dt: number) => {
                         class="weather-icon forecast-icon"
                     />
                     <p class="font-semibold">
-                        {{ getTemp(dayWeather.temp.day, degree) }}°
+                        {{ getTemp(dayWeather.temp.day, degree, measurement) }}°
                     </p>
                     <p class="font-semibold dark-gray">
-                        {{ getInverseTemp(dayWeather.temp.day, degree) }}°
+                        {{ getInverseTemp(dayWeather.temp.day, degree, measurement) }}°
                     </p>
                 </div>
             </div>

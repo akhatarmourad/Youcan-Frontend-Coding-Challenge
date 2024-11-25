@@ -40,19 +40,39 @@ export function toFahrenheit(celsius: number): number {
     return Math.round((celsius * 9) / 5 + 32)
 }
 
-export function getTemp(temp: number, degree: 'C' | 'F'): number {
-    if (degree === 'C') {
-        return Math.round(temp)
+function toCelsius(fahrenheit: number): number {
+    return Math.round((fahrenheit - 32) * 5/9);
+}
+
+export function getTemp(temp: number, degree: 'C' | 'F', unit: 'metric' | 'imperial'): number {
+    if (unit === 'metric') {
+        if (degree === 'C') {
+            return Math.round(temp); 
+        } else {
+            return toFahrenheit(temp); 
+        }
     } else {
-        return toFahrenheit(temp)
+        if (degree === 'F') {
+            return Math.round(temp); 
+        } else {
+            return toCelsius(temp);
+        }
     }
 }
 
-export function getInverseTemp(temp: number, currentDegree: 'C' | 'F'): number {
-    if (currentDegree === 'C') {
-        return toFahrenheit(temp)
+export function getInverseTemp(temp: number, currentDegree: 'C' | 'F', currentUnit: 'metric' | 'imperial'): number {
+    if (currentUnit === 'metric') {
+        if (currentDegree === 'C') {
+            return toFahrenheit(temp); 
+        } else {
+            return Math.round(temp); 
+        }
     } else {
-        return Math.round(temp)
+        if (currentDegree === 'F') {
+            return toCelsius(temp); 
+        } else {
+            return Math.round(temp); 
+        }
     }
 }
 
