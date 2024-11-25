@@ -31,10 +31,10 @@ Below is a screenshot of the app UI, based on the [Figma design](https://www.fig
 
 Postman was used to test and validate the API endpoints, including the [OpenWeather API](https://openweathermap.org/api/one-call-3), [MapBox API](https://docs.mapbox.com/api/search/), and [Pollution API](https://openweathermap.org/api/air-pollution).
 
-![Postamn & APIs](./Attatchments/Weather-API-Postman.png.png)
+![Postamn & APIs](./Attatchments/Weather-API-Postman.png)
 
 The [Air Quality Index (AQI)](https://openweathermap.org/air-pollution-index-levels) is calculated based on data from the Pollution APIs, using a standard formula to assess air quality levels.
-![AQI Formula](./Attatchments/Overview.png)
+![AQI Formula](./Attatchments/AQI%20Formula.png)
 
 ## Usage
 
@@ -42,7 +42,6 @@ The [Air Quality Index (AQI)](https://openweathermap.org/air-pollution-index-lev
 
    ```bash
    git clone https://github.com/akhatarmourad/Youcan-Frontend-Coding-Challenge.git
-   ```
 
 2. Open the project in your preferred code editor (e.g., VSCode, Sublime Text, Cursor, etc.).
 
@@ -50,28 +49,24 @@ The [Air Quality Index (AQI)](https://openweathermap.org/air-pollution-index-lev
 
    ```bash
    cd weather-app
-   ```
 
 4. Install the required dependencies
 
-    ````bash
+    ```bash
     npm install
-    ```
+
 5. Before running the app, make sure to create a .env file in the root of the weather-app directory and add the necessary environment variables (API keys).
 
     ```bash
    VITE_MAPBOX_ACCESS_TOKEN=Your API Key Goes here...
-   ```
 
    ```bash
    VITE_WEATHER_API_KEY=Your API Key Goes here...
-   ```
 
 6. To run the app in development mode, use the following command
 
    ```bash
    npm run dev
-   ```
 
 ---
 
