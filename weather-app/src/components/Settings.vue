@@ -46,7 +46,7 @@ function toggleMeasurement(measurement: 'metric' | 'imperial'): void {
                 <button
                     :class="['btn', { 'bg-white': measurement === 'metric' }]"
                     :aria-pressed="measurement === 'metric'"
-                    @click="toggleMeasurement('metric')"
+                    @click="toggleDegree('C')"
                 >
                     Metric
                 </button>
@@ -54,7 +54,7 @@ function toggleMeasurement(measurement: 'metric' | 'imperial'): void {
                 <button
                     :class="['btn', { 'bg-white': measurement === 'imperial' }]"
                     :aria-pressed="measurement === 'imperial'"
-                    @click="toggleMeasurement('imperial')"
+                    @click="toggleDegree('F')"
                 >
                     Imperial
                 </button>
