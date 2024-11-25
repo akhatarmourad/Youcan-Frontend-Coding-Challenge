@@ -10,7 +10,6 @@
     </div>
 </template>
 
-
 <style scoped>
 .container {
     width: 100%;

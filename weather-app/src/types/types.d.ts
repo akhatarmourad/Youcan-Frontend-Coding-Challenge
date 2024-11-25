@@ -69,16 +69,16 @@ interface AQIResponse {
 }
 
 interface AQIData {
-    category: string;
-    aqi: number;
-    index: number;
-    pollutant: string;
+    category: string
+    aqi: number
+    index: number
+    pollutant: string
 }
 
 interface Coordinates {
-    lat: number; 
-    lon: number; 
-  }
+    lat: number
+    lon: number
+}
 
 export {
     MapboxResult,

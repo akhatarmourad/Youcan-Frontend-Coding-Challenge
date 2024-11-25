@@ -2,7 +2,12 @@
 import { ref, defineProps } from 'vue'
 import { storeToRefs } from 'pinia'
 import { ForecastWeather } from '../types/types'
-import { formatTime, getInverseTemp, getShortDayName, getTemp } from '../libs/utils'
+import {
+    formatTime,
+    getInverseTemp,
+    getShortDayName,
+    getTemp
+} from '../libs/utils'
 import { SvgIcons } from '../assets/icons'
 import { useSettingsStore } from '../stores/settingsStore'
 
@@ -14,7 +19,7 @@ const setActiveTab = (type: 'hourly' | 'daily') => {
     activeTab.value = type
 }
 
-const { degree } = storeToRefs(useSettingsStore());
+const { degree } = storeToRefs(useSettingsStore())
 
 const getIconComponent = (iconKey: string) => SvgIcons[iconKey] || null
 

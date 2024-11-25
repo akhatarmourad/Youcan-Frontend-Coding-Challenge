@@ -1,19 +1,19 @@
 <script lang="ts" setup>
-import { useSettingsStore } from '../stores/settingsStore';
-import { storeToRefs } from "pinia";
+import { useSettingsStore } from '../stores/settingsStore'
+import { storeToRefs } from 'pinia'
 
 // Access the Pinia store
-const settingsStore = useSettingsStore();
+const settingsStore = useSettingsStore()
 
-const { degree, measurement } = storeToRefs(settingsStore);
+const { degree, measurement } = storeToRefs(settingsStore)
 
 function toggleDegree(degree: 'C' | 'F'): void {
-  settingsStore.toggleDegree(degree);
+    settingsStore.toggleDegree(degree)
 }
 
 // Function to toggle the measurement
 function toggleMeasurement(measurement: 'metric' | 'imperial'): void {
-  settingsStore.toggleMeasurement(measurement);
+    settingsStore.toggleMeasurement(measurement)
 }
 </script>
 

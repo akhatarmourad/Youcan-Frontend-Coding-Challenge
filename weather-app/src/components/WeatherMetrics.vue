@@ -1,11 +1,16 @@
 <script lang="ts" setup>
 import { ref, defineProps, watch, onMounted } from 'vue'
-import type { AQIData, Coordinates, CurrentWeather, HourlyWeather } from '../types/types'
-import { getAirQualityData } from '../api/openWeatherApi';
-import { defaultCity } from '../libs/constants';
-import { calculateMaxPollutantAQI, getTemp } from '../libs/utils';
-import { useSettingsStore } from '../stores/settingsStore';
-import { storeToRefs } from 'pinia';
+import type {
+    AQIData,
+    Coordinates,
+    CurrentWeather,
+    HourlyWeather
+} from '../types/types'
+import { getAirQualityData } from '../api/openWeatherApi'
+import { defaultCity } from '../libs/constants'
+import { calculateMaxPollutantAQI, getTemp } from '../libs/utils'
+import { useSettingsStore } from '../stores/settingsStore'
+import { storeToRefs } from 'pinia'
 
 import {
     DropLine,
@@ -15,74 +20,73 @@ import {
     SvgIcons
 } from '../assets/icons'
 
+const AQIInfos = ref<AQIData | null>(null)
+const error = ref<string | null>(null)
 
-const AQIInfos = ref<AQIData | null>(null);
-const error = ref<string | null>(null);
-
-const { degree } = storeToRefs(useSettingsStore());
-
+const { degree } = storeToRefs(useSettingsStore())
 
 const props = defineProps<{
-    currentWeather: CurrentWeather | null,
-    hourlyForecast: HourlyWeather[] | null,
+    currentWeather: CurrentWeather | null
+    hourlyForecast: HourlyWeather[] | null
     coordinates: Coordinates
 }>()
 
 const getIconComponent = (iconKey: string) => {
-  if (SvgIcons[iconKey]) {
-    return SvgIcons[iconKey]; 
-  }
+    if (SvgIcons[iconKey]) {
+        return SvgIcons[iconKey]
+    }
 
-  const currentHour = new Date().getHours();
-  const isDayTime = currentHour >= 6 && currentHour < 18; 
-  return isDayTime ? SvgIcons['01d'] : SvgIcons['01n'];
-};
-
+    const currentHour = new Date().getHours()
+    const isDayTime = currentHour >= 6 && currentHour < 18
+    return isDayTime ? SvgIcons['01d'] : SvgIcons['01n']
+}
 
 const getAQI = async (latitude: number, longitude: number): Promise<void> => {
     try {
-        const response = await getAirQualityData(latitude, longitude);
+        const response = await getAirQualityData(latitude, longitude)
         /* Set Data Variables */
 
         /* Calculate Air Quality Index */
-        AQIInfos.value = calculateMaxPollutantAQI(response.list[0]?.components);
+        AQIInfos.value = calculateMaxPollutantAQI(response.list[0]?.components)
 
-        error.value = null;
+        error.value = null
     } catch (err: unknown) {
         if (err instanceof Error) {
-            error.value = `Failed to fetch weather AQI: ${err.message}`;
+            error.value = `Failed to fetch weather AQI: ${err.message}`
         } else {
-            error.value = 'An unknown error occurred. Please try again.';
+            error.value = 'An unknown error occurred. Please try again.'
         }
     }
-};
+}
 
 // Call `getAQI` on component mount with initial coordinates
 onMounted(() => {
     if (props.coordinates) {
-        getAQI(props.coordinates.lat, props.coordinates.lon);
+        getAQI(props.coordinates.lat, props.coordinates.lon)
+    } else {
+        getAQI(
+            defaultCity.properties.coordinates.latitude,
+            defaultCity.properties.coordinates.longitude
+        )
     }
-    else {
-        getAQI(defaultCity.properties.coordinates.latitude, defaultCity.properties.coordinates.longitude);
-    }
-});
+})
 
 watch(
     () => props.coordinates,
     (newCoordinates) => {
         if (newCoordinates) {
-            getAQI(newCoordinates.lat, newCoordinates.lon);
+            getAQI(newCoordinates.lat, newCoordinates.lon)
         }
     },
-    { deep: true } 
-);
+    { deep: true }
+)
 
 /* Function to calculate the with of the Progress Bar */
 function calculateWidthPercentage(aqi: number, maxAQI: number = 300) {
-  if (aqi <= 0) return 0;
-  if (aqi >= maxAQI) return 100;
+    if (aqi <= 0) return 0
+    if (aqi >= maxAQI) return 100
 
-  return Math.round((aqi / maxAQI) * 100);
+    return Math.round((aqi / maxAQI) * 100)
 }
 </script>
 
@@ -92,8 +96,12 @@ function calculateWidthPercentage(aqi: number, maxAQI: number = 300) {
         <div class="flex">
             <div class="temp">
                 <component
-                    v-if="getIconComponent(currentWeather?.weather[0].icon || '')"
-                    :is="getIconComponent(currentWeather?.weather[0].icon || '')"
+                    v-if="
+                        getIconComponent(currentWeather?.weather[0].icon || '')
+                    "
+                    :is="
+                        getIconComponent(currentWeather?.weather[0].icon || '')
+                    "
                     class="weather-icon temp-icon"
                 />
                 <span class="temp-value"
@@ -156,7 +164,9 @@ function calculateWidthPercentage(aqi: number, maxAQI: number = 300) {
                         <SlowDownLine class="metric-icon" />
                         <span class="metric-name">AQI</span>
                     </div>
-                    <span class="metric-value">{{ Math.round(AQIInfos?.aqi ?? 0) }}</span>
+                    <span class="metric-value">{{
+                        Math.round(AQIInfos?.aqi ?? 0)
+                    }}</span>
                 </div>
             </div>
         </div>
@@ -175,7 +185,13 @@ function calculateWidthPercentage(aqi: number, maxAQI: number = 300) {
             <!-- Progress Bar -->
             <div class="bar-box">
                 <span class="bar" />
-                <span class="progress-bar" :style="{ width: calculateWidthPercentage(AQIInfos?.aqi ?? 0) + '%' }" />
+                <span
+                    class="progress-bar"
+                    :style="{
+                        width:
+                            calculateWidthPercentage(AQIInfos?.aqi ?? 0) + '%'
+                    }"
+                />
             </div>
         </div>
     </div>

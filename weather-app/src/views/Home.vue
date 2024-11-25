@@ -16,18 +16,22 @@ const selectedCityInfo = ref<MapboxResult | null>(null)
 const currentWeather = ref<CurrentWeather | null>(null)
 const forecastWeather = ref<ForecastWeather | null>(null)
 const errorMessage = ref<string | null>(null)
-const coordinates = ref({ lat: 0, lon: 0 });
+const coordinates = ref({ lat: 0, lon: 0 })
 
-const { measurement } = storeToRefs(useSettingsStore());
+const { measurement } = storeToRefs(useSettingsStore())
 
 /* Fetch Weather Data */
 const fetchWeatherData = async (
     latitude: number,
     longitude: number,
-    measurement: string,
+    measurement: string
 ): Promise<void> => {
     try {
-        const response = await getWeatherData(latitude, longitude, measurement as "metric" | "imperial")
+        const response = await getWeatherData(
+            latitude,
+            longitude,
+            measurement as 'metric' | 'imperial'
+        )
 
         /* Set Data Variables */
         const { current, hourly, daily } = response
@@ -48,7 +52,10 @@ const fetchWeatherData = async (
 const handleResultSelected = async (result: MapboxResult): Promise<void> => {
     selectedCityInfo.value = result
     const { latitude, longitude } = result.properties.coordinates
-    coordinates.value = {lat: result.properties.coordinates.latitude, lon: result.properties.coordinates.longitude }
+    coordinates.value = {
+        lat: result.properties.coordinates.latitude,
+        lon: result.properties.coordinates.longitude
+    }
     await fetchWeatherData(latitude, longitude, measurement.value)
 }
 
@@ -59,11 +66,15 @@ onMounted(async () => {
 
 /* Watch for Changes in Measurement */
 watch(measurement, async () => {
-    console.log(measurement.value);
+    console.log(measurement.value)
     console.log(coordinates.value.lat, coordinates.value.lon)
-  const res = await fetchWeatherData(coordinates.value.lat, coordinates.value.lon, measurement.value);
-  console.log(res);
-});
+    const res = await fetchWeatherData(
+        coordinates.value.lat,
+        coordinates.value.lon,
+        measurement.value
+    )
+    console.log(res)
+})
 </script>
 
 <template>
@@ -113,7 +124,7 @@ watch(measurement, async () => {
     .wrapper {
         padding: 30px 40px;
     }
-    
+
     .outer-container {
         width: 100%;
     }

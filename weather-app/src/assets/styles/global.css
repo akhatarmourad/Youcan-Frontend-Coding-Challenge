@@ -70,7 +70,7 @@ body {
     font-size: 14px;
     font-weight: 400;
     flex: 1;
-    transition: all .25s;
+    transition: all 0.25s;
 }
 
 .bg-white {
@@ -84,9 +84,6 @@ body {
     align-items: center;
     justify-content: center;
 }
-
-
-
 
 /* Colors */
 .dark-gray {

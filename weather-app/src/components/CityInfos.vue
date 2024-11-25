@@ -10,7 +10,6 @@ const currentTime = ref<string>(getCurrentTime())
 const currentDate = ref<string>(getFormattedDate())
 let timeInterval: ReturnType<typeof setInterval>
 
-
 /* Define Props Type */
 defineProps<{ cityInfo: MapboxResult | null }>()
 

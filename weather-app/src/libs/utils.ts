@@ -42,19 +42,19 @@ export function toFahrenheit(celsius: number): number {
 
 export function getTemp(temp: number, degree: 'C' | 'F'): number {
     if (degree === 'C') {
-      return Math.round(temp); 
+        return Math.round(temp)
     } else {
-      return toFahrenheit(temp); 
+        return toFahrenheit(temp)
     }
-  }
+}
 
-  export function getInverseTemp(temp: number, currentDegree: 'C' | 'F'): number {
+export function getInverseTemp(temp: number, currentDegree: 'C' | 'F'): number {
     if (currentDegree === 'C') {
-      return toFahrenheit(temp);
+        return toFahrenheit(temp)
     } else {
-      return Math.round(temp);
+        return Math.round(temp)
     }
-  }
+}
 
 type Pollutant = keyof (typeof AQI_TABLE)[0]['ranges']
 
@@ -71,7 +71,8 @@ function calculatePollutantAQI(
 
         if (concentration >= cLow && concentration <= cHigh) {
             return (
-                ((iHigh - iLow) / (cHigh - cLow)) * (concentration - cLow) + iLow
+                ((iHigh - iLow) / (cHigh - cLow)) * (concentration - cLow) +
+                iLow
             )
         }
     }
@@ -79,41 +80,42 @@ function calculatePollutantAQI(
     return 0
 }
 
-export function calculateMaxPollutantAQI(components: Record<Pollutant, number>): {
-    pollutant: string;
-    aqi: number;
-    index: number;
-    category: string;
+export function calculateMaxPollutantAQI(
+    components: Record<Pollutant, number>
+): {
+    pollutant: string
+    aqi: number
+    index: number
+    category: string
 } {
-    let maxAQI = 0;
-    let maxPollutant = '';
-    let maxIndex = 0;
-    let maxCategory = '';
+    let maxAQI = 0
+    let maxPollutant = ''
+    let maxIndex = 0
+    let maxCategory = ''
 
     for (const pollutant in components) {
-        const concentration = components[pollutant as Pollutant];
+        const concentration = components[pollutant as Pollutant]
         try {
             const aqi = calculatePollutantAQI(
                 pollutant as Pollutant,
                 concentration
-            );
+            )
 
             const aqiData = AQI_TABLE.find(
-                (entry) =>
-                    aqi >= entry.interval[0] && aqi <= entry.interval[1]
-            );
+                (entry) => aqi >= entry.interval[0] && aqi <= entry.interval[1]
+            )
 
             if (aqi > maxAQI) {
-                maxAQI = aqi;
-                maxPollutant = pollutant;
+                maxAQI = aqi
+                maxPollutant = pollutant
                 if (aqiData) {
-                    maxIndex = aqiData.index;
-                    maxCategory = aqiData.category;
+                    maxIndex = aqiData.index
+                    maxCategory = aqiData.category
                 }
             }
         } catch (error: unknown) {
             if (error instanceof Error) {
-                console.warn(error.message);
+                console.warn(error.message)
             }
         }
     }
@@ -122,8 +124,6 @@ export function calculateMaxPollutantAQI(components: Record<Pollutant, number>):
         pollutant: maxPollutant,
         aqi: maxAQI,
         index: maxIndex,
-        category: maxCategory,
-    };
+        category: maxCategory
+    }
 }
-
-
