@@ -14,7 +14,7 @@ const forecastWeather = ref<ForecastWeather | null>(null)
 const errorMessage = ref<string | null>(null)
 const coordinates = ref({ lat: 0, lon: 0 })
 
-const { measurement, degree } = storeToRefs(useSettingsStore())
+const { measurement } = storeToRefs(useSettingsStore())
 
 /* Fetch Weather Data */
 const fetchWeatherData = async (

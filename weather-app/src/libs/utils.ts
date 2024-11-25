@@ -76,6 +76,23 @@ export function getInverseTemp(temp: number, currentDegree: 'C' | 'F', currentUn
     }
 }
 
+// Get the unit for wind speed based on the unit system
+export function getWindSpeedUnit(unit: 'metric' | 'imperial'): string {
+    if (unit === 'metric') {
+        return 'km/h';
+    } else {
+        return 'mph';
+    }
+}
+
+export function getPrecipitationUnit(unit: 'metric' | 'imperial'): string {
+    if (unit === 'metric') {
+        return 'mm';
+    } else {
+        return 'in';
+    }
+}
+
 type Pollutant = keyof (typeof AQI_TABLE)[0]['ranges']
 
 function calculatePollutantAQI(

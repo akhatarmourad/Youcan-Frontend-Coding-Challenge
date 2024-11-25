@@ -8,7 +8,7 @@ import type {
 } from '../types/types'
 import { getAirQualityData } from '../api/openWeatherApi'
 import { defaultCity } from '../libs/constants'
-import { calculateMaxPollutantAQI, getTemp } from '../libs/utils'
+import { calculateMaxPollutantAQI, getTemp, getWindSpeedUnit } from '../libs/utils'
 import { useSettingsStore } from '../stores/settingsStore'
 import { storeToRefs } from 'pinia'
 
@@ -143,7 +143,9 @@ function calculateWidthPercentage(aqi: number, maxAQI: number = 300) {
                         >{{
                             Math.round(currentWeather?.wind_speed ?? 0)
                         }}
-                        km/h</span
+
+                        {{ getWindSpeedUnit(measurement) }}
+                        </span
                     >
                 </div>
             </div>
